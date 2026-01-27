@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Chat</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <button class="new-chat-btn" onclick="createNewChat()">
+                <span class="icon">+</span>
+                新しいチャット
+            </button>
+            <div class="conversations-list" id="conversationsList">
+                <!-- 会話リストがここに表示される -->
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="main-content">
+            <div class="chat-container">
+                <div class="messages" id="messagesContainer">
+                    <div class="welcome-message" id="welcomeMessage">
+                        <h1>Gemini Chat</h1>
+                        <p>何でも聞いてください</p>
+                    </div>
+                </div>
+
+                <div class="input-area">
+                    <form id="chatForm" onsubmit="sendMessage(event)">
+                        <div class="input-wrapper">
+                            <textarea
+                                id="messageInput"
+                                placeholder="メッセージを入力..."
+                                rows="1"
+                                onkeydown="handleKeyDown(event)"
+                            ></textarea>
+                            <button type="submit" id="sendButton">
+                                <svg viewBox="0 0 24 24" width="24" height="24">
+                                    <path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+{
+  "meta": {
+    "title": "北米ビジネスクラスX発話 界隈分析",
+    "generated_at": "2026-01-27T21:44:24.673059",
+    "data_source": "北米・欧州ビジネスクラスインサイト調査 - 北米X発話.csv"
+  },
+  "basic_stats": {
+    "total_posts": 4453,
+    "avg_length": 340.2,
+    "max_length": 8834,
+    "min_length": 27
+  },
+  "airline_counts": [
+    {
+      "name": "American Airlines",
+      "count": 1680
+    },
+    {
+      "name": "British Airways",
+      "count": 797
+    },
+    {
+      "name": "Air France",
+      "count": 634
+    },
+    {
+      "name": "Lufthansa",
+      "count": 595
+    },
+    {
+      "name": "Air Canada",
+      "count": 378
+    },
+    {
+      "name": "Ryanair",
+      "count": 256
+    },
+    {
+      "name": "Delta Air Lines",
+      "count": 194
+    },
+    {
+      "name": "Emirates",
+      "count": 121
+    },
+    {
+      "name": "KLM",
+      "count": 51
+    },
+    {
+      "name": "Swiss",
+      "count": 30
+    },
+    {
+      "name": "Air India",
+      "count": 12
+    },
+    {
+      "name": "United Airlines",
+      "count": 10
+    },
+    {
+      "name": "Iberia",
+      "count": 9
+    }
+  ],
+  "kaiwai_counts": [
+    {
+      "name": "ニュース拡散界隈",
+      "count": 2076,
+      "description": "ニュースのRT・引用をするユーザー"
+    },
+    {
+      "name": "未分類",
+      "count": 1535,
+      "description": ""
+    },
+    {
+      "name": "ユーモア界隈",
+      "count": 623,
+      "description": "ジョーク・ユーモアを交えて投稿するユーザー"
+    },
+    {
+      "name": "クレーマー界隈",
+      "count": 475,
+      "description": "苦情・不満を投稿するユーザー"
+    },
+    {
+      "name": "マイラー界隈",
+      "count": 448,
+      "description": "マイル・ポイント活用に関心があるユーザー"
+    },
+    {
+      "name": "レビュアー界隈",
+      "count": 394,
+      "description": "レビュー・体験共有をするユーザー"
+    },
+    {
+      "name": "政治界隈",
+      "count": 212,
+      "description": "政治的な言及をするユーザー"
+    },
+    {
+      "name": "インシデント界隈",
+      "count": 180,
+      "description": "機内でのトラブル・インシデントに言及するユーザー"
+    }
+  ],
+  "cross_data": {
+    "American Airlines": {
+      "クレーマー界隈": 372,
+      "レビュアー界隈": 126,
+      "マイラー界隈": 144,
+      "ニュース拡散界隈": 979,
+      "政治界隈": 122,
+      "ユーモア界隈": 138,
+      "インシデント界隈": 135,
+      "未分類": 445
+    },
+    "United Airlines": {
+      "クレーマー界隈": 1,
+      "レビュアー界隈": 5,
+      "マイラー界隈": 5,
+      "ニュース拡散界隈": 5,
+      "ユーモア界隈": 1,
+      "未分類": 1
+    },
+    "Delta Air Lines": {
+      "クレーマー界隈": 23,
+      "レビュアー界隈": 21,
+      "マイラー界隈": 33,
+      "ニュース拡散界隈": 91,
+      "政治界隈": 7,
+      "ユーモア界隈": 13,
+      "インシデント界隈": 9,
+      "未分類": 58
+    },
+    "Lufthansa": {
+      "クレーマー界隈": 48,
+      "レビュアー界隈": 97,
+      "マイラー界隈": 82,
+      "ニュース拡散界隈": 100,
+      "政治界隈": 11,
+      "ユーモア界隈": 27,
+      "インシデント界隈": 8,
+      "未分類": 314
+    },
+    "British Airways": {
+      "クレーマー界隈": 19,
+      "レビュアー界隈": 47,
+      "マイラー界隈": 66,
+      "ニュース拡散界隈": 459,
+      "政治界隈": 9,
+      "ユーモア界隈": 359,
+      "インシデント界隈": 12,
+      "未分類": 218
+    },
+    "Air France": {
+      "クレーマー界隈": 14,
+      "レビュアー界隈": 53,
+      "マイラー界隈": 81,
+      "ニュース拡散界隈": 322,
+      "政治界隈": 6,
+      "ユーモア界隈": 31,
+      "インシデント界隈": 4,
+      "未分類": 205
+    },
+    "Air Canada": {
+      "クレーマー界隈": 12,
+      "レビュアー界隈": 44,
+      "マイラー界隈": 57,
+      "ニュース拡散界隈": 116,
+      "政治界隈": 62,
+      "ユーモア界隈": 25,
+      "インシデント界隈": 7,
+      "未分類": 163
+    },
+    "Emirates": {
+      "クレーマー界隈": 8,
+      "レビュアー界隈": 18,
+      "マイラー界隈": 15,
+      "ニュース拡散界隈": 36,
+      "政治界隈": 3,
+      "ユーモア界隈": 9,
+      "未分類": 58
+    },
+    "Ryanair": {
+      "クレーマー界隈": 7,
+      "レビュアー界隈": 14,
+      "マイラー界隈": 15,
+      "ニュース拡散界隈": 72,
+      "政治界隈": 2,
+      "ユーモア界隈": 36,
+      "インシデント界隈": 4,
+      "未分類": 132
+    },
+    "Iberia": {
+      "マイラー界隈": 2,
+      "ニュース拡散界隈": 6,
+      "ユーモア界隈": 1,
+      "未分類": 2
+    },
+    "KLM": {
+      "クレーマー界隈": 2,
+      "レビュアー界隈": 4,
+      "マイラー界隈": 26,
+      "ニュース拡散界隈": 13,
+      "インシデント界隈": 1,
+      "未分類": 16
+    },
+    "Swiss": {
+      "クレーマー界隈": 2,
+      "レビュアー界隈": 7,
+      "マイラー界隈": 10,
+      "ニュース拡散界隈": 4,
+      "未分類": 15
+    },
+    "Air India": {
+      "クレーマー界隈": 3,
+      "レビュアー界隈": 4,
+      "マイラー界隈": 3,
+      "ニュース拡散界隈": 6,
+      "政治界隈": 1,
+      "ユーモア界隈": 2,
+      "未分類": 1
+    }
+  },
+  "viral_topics": [
+    {
+      "topic": "BA窓付きトイレ話題",
+      "count": 577,
+      "type": "バイラル",
+      "risk_level": "低",
+      "description": "British Airwaysの窓付きトイレがSNSで話題に。ユニークなプロダクトとして注目",
+      "sample_posts": [
+        "First-class passengers on British Airways' Boeing 747 have raised concerns about a redesign featuring windows in select lavatories. A female traveler ...",
+        "Surely calls for lots of duct tape? Trust me, it’s a lot more civilized where we plebs ride, way back in rows 90-99 with our knees rammed against our ..."
+      ]
+    },
+    {
+      "topic": "機内トラブル・乗客間トラブル",
+      "count": 6,
+      "type": "炎上リスク",
+      "risk_level": "高",
+      "description": "'機内トラブル・乗客間トラブル'に関する投稿が6件検出。メディア注目度が高い可能性",
+      "sample_posts": [
+        "Is Air Force 2 grounded for some reason? Why are they flying commercial? https://t.co/ndZHJtKr9J QT @MarioNawfal: 🇺🇸PASSENGERS STOP A FIGHT ON AMERICA...",
+        "Thank God for men who put a fast stop to this. https://t.co/CziwlytbAK QT @MarioNawfal: 🇺🇸PASSENGERS STOP A FIGHT ON AMERICAN AIRLINES FLIGHT On an Am..."
+      ]
+    },
+    {
+      "topic": "逮捕関連インシデント",
+      "count": 11,
+      "type": "炎上リスク",
+      "risk_level": "高",
+      "description": "'逮捕関連インシデント'に関する投稿が11件検出。メディア注目度が高い可能性",
+      "sample_posts": [
+        "Well, one less democrat taken out of society. https://t.co/ikEWygcXQy QT @ReidFirm: @rawsalerts Shocking Delta Pilot Arrest for Child Sexual Abuse Mat...",
+        "So Delta is to blame for hiring a. Pedophile? How would they know? https://t.co/Le0noRLySb QT @ReidFirm: @rawsalerts Shocking Delta Pilot Arrest for C..."
+      ]
+    },
+    {
+      "topic": "緊急着陸・ダイバート",
+      "count": 18,
+      "type": "炎上リスク",
+      "risk_level": "高",
+      "description": "'緊急着陸・ダイバート'に関する投稿が18件検出。メディア注目度が高い可能性",
+      "sample_posts": [
+        "American Airlines flight diverted after first-class passenger starts openly vaping: report ⁦⁦@Heather_Poole⁩ https://t.co/jEcAilACex...",
+        "i would’ve pushed it to the back of his or her throat. 😌 https://t.co/tdTJ2F4euh QT @Dexerto: An American Airlines flight was diverted after a first-c..."
+      ]
+    },
+    {
+      "topic": "機内での電子タバコ問題",
+      "count": 18,
+      "type": "炎上リスク",
+      "risk_level": "高",
+      "description": "'機内での電子タバコ問題'に関する投稿が18件検出。メディア注目度が高い可能性",
+      "sample_posts": [
+        "American Airlines flight diverted after first-class passenger starts openly vaping: report ⁦⁦@Heather_Poole⁩ https://t.co/jEcAilACex...",
+        "i would’ve pushed it to the back of his or her throat. 😌 https://t.co/tdTJ2F4euh QT @Dexerto: An American Airlines flight was diverted after a first-c..."
+      ]
+    },
+    {
+      "topic": "ポジティブ体験共有",
+      "count": 104,
+      "type": "ポジティブ",
+      "risk_level": "なし",
+      "description": "'ポジティブ体験共有'に関するポジティブな投稿が104件。SNS活用の好事例",
+      "sample_posts": [
+        "The fact that Air France is on this list when it’s not even better than its sister company is funny. QT @spectatorindex: World's best business class a...",
+        "@AirplaneCentral The best food I've ever had was on First Class Swiss Air, now defunct. The second best food was Air France Concorde New York to Paris..."
+      ]
+    },
+    {
+      "topic": "無料アップグレード体験",
+      "count": 9,
+      "type": "ポジティブ",
+      "risk_level": "なし",
+      "description": "'無料アップグレード体験'に関するポジティブな投稿が9件。SNS活用の好事例",
+      "sample_posts": [
+        "Upgrade ya damn domestic first class seats… shit is just premium economy seats with extra leg room. https://t.co/amVjaORLPM QT @nypost: American Airli...",
+        "I was served like this (caviar included) many a times on Panam (the largest American airline in the world at the time) flights from JFK to Dusseldorf,..."
+      ]
+    }
+  ],
+  "executive_findings": [
+    "**最多言及航空会社**: American Airlines（1680件）が最も多く言及されている",
+    "**最活発界隈**: ニュース拡散界隈（2076件）が最も活発",
+    "**インシデント注意**: American Airlinesはインシデント界隈での言及が最多（135件）",
+    "**顧客不満注意**: American Airlinesはクレーマー界隈での言及が最多（372件）",
+    "**分類カバレッジ**: 65.5%の投稿が界隈に分類済み"
+  ],
+  "recommendations": {
+    "航空会社向け": [
+      "インシデント関連の投稿が多数検出されています。クライシスコミュニケーション体制を見直し、迅速な情報開示と顧客対応のプロトコルを確立することを推奨します。",
+      "顧客不満の投稿が目立ちます。カスタマーサポートの応対品質向上と、SNS上でのプロアクティブな顧客対応（ソーシャルリスニング）を強化することを推奨します。",
+      "マイラー層からの関心が高いです。ロイヤルティプログラムの競争力を維持・強化し、エリート会員向けの差別化されたサービスを提供することでLTV向上が期待できます。"
+    ],
+    "SNS戦略": [
+      "レビュアー・インフルエンサーの存在が確認されています。ブランドアンバサダー施策や、体験価値の高いサービスのPR協力依頼を検討してください。",
+      "ユーモア・ミーム文脈での言及があります。公式SNSアカウントで適度なユーモアを交えた投稿を行うことで、親しみやすさとエンゲージメント向上が期待できます。",
+      "「BA窓付きトイレ話題」がバイラルしています。ポジティブな話題として公式アカウントからも発信し、認知拡大に活用することを検討してください。",
+      "「機内トラブル・乗客間トラブル」に関する投稿が検出されています。炎上リスクに備え、想定Q&Aとステートメントを事前準備することを推奨します。",
+      "「逮捕関連インシデント」に関する投稿が検出されています。炎上リスクに備え、想定Q&Aとステートメントを事前準備することを推奨します。",
+      "「緊急着陸・ダイバート」に関する投稿が検出されています。炎上リスクに備え、想定Q&Aとステートメントを事前準備することを推奨します。",
+      "「機内での電子タバコ問題」に関する投稿が検出されています。炎上リスクに備え、想定Q&Aとステートメントを事前準備することを推奨します。"
+    ]
+  },
+  "kaiwai_insights": {
+    "クレーマー界隈": {
+      "count": 475,
+      "description": "苦情・不満を投稿するユーザー",
+      "meaning": "顧客不満が表面化している領域。サービス品質、対応の遅れ、期待値とのギャップが原因",
+      "risk": "ブランドイメージの毀損、口コミによる新規顧客獲得の阻害、既存顧客の離反",
+      "opportunity": "改善ポイントの特定、競合との差別化要素の発見",
+      "action": "カスタマーサポートの強化、不満の根本原因分析、プロアクティブな顧客対応"
+    },
+    "ユーモア界隈": {
+      "count": 623,
+      "description": "ジョーク・ユーモアを交えて投稿するユーザー",
+      "meaning": "航空会社がミーム・ジョークの題材に。ブランド認知の一形態",
+      "risk": "揶揄的な文脈でのブランド消費、イメージのコントロール困難",
+      "opportunity": "バイラル効果によるブランド認知向上、親しみやすさの醸成",
+      "action": "ユーモアを活かしたSNS運用、適切なトーン&マナーの設定"
+    },
+    "ニュース拡散界隈": {
+      "count": 2076,
+      "description": "ニュースのRT・引用をするユーザー",
+      "meaning": "情報の拡散力が高い層。ニュースやトレンドに敏感",
+      "risk": "ネガティブニュースの急速な拡散、誤情報の流布",
+      "opportunity": "ポジティブニュースの効果的な拡散、メディアリレーションの強化",
+      "action": "プレスリリースのタイミング最適化、ファクトチェック体制の整備"
+    },
+    "インシデント界隈": {
+      "count": 180,
+      "description": "機内でのトラブル・インシデントに言及するユーザー",
+      "meaning": "機内トラブル・安全性に関する言及。メディア注目度が高い",
+      "risk": "安全性への不安喚起、企業イメージの深刻な毀損",
+      "opportunity": "危機管理能力のアピール、安全への取り組みの可視化",
+      "action": "迅速な情報開示、クライシスコミュニケーション体制の強化"
+    },
+    "未分類": {
+      "count": 1535,
+      "description": "",
+      "meaning": "特定のパターンに該当しない一般的な言及",
+      "risk": "潜在的なトレンドの見落とし",
+      "opportunity": "新しい界隈・トピックの発見",
+      "action": "定期的な分類ルールの見直し、新キーワードの追加"
+    },
+    "マイラー界隈": {
+      "count": 448,
+      "description": "マイル・ポイント活用に関心があるユーザー",
+      "meaning": "ロイヤルティプログラムに高い関心を持つ層。LTV（顧客生涯価値）が高い傾向",
+      "risk": "競合のプログラム改善による顧客流出、ポイント価値の希薄化への不満",
+      "opportunity": "リピーター育成、アップセル・クロスセルの機会",
+      "action": "特典の差別化、エリートステータスの価値向上、パートナーシップ拡大"
+    },
+    "政治界隈": {
+      "count": 212,
+      "description": "政治的な言及をするユーザー",
+      "meaning": "政治的文脈での航空会社言及。政策や規制との関連",
+      "risk": "政治的論争への巻き込まれ、特定の立場との関連付け",
+      "opportunity": "政策提言への参画、業界としての発言力強化",
+      "action": "政治的中立性の維持、ステークホルダーとの関係構築"
+    },
+    "レビュアー界隈": {
+      "count": 394,
+      "description": "レビュー・体験共有をするユーザー",
+      "meaning": "インフルエンサーや体験共有者による情報発信。購買意思決定に影響",
+      "risk": "ネガティブレビューの拡散、競合他社との比較での劣位",
+      "opportunity": "ポジティブな口コミ創出、ブランドアンバサダーの発掘",
+      "action": "レビュアーとの関係構築、体験価値の向上、SNS施策との連携"
+    }
+  },
+  "representative_posts": {
+    "クレーマー界隈": [
+      "@lufthansa How can @lufthansa justify inconveniencing my 70-year-old father? Canceling his business class ticket to LA due to a strike without any warning or apology is simply unacceptable. It's time ...",
+      "His wife in the back is so real cause period she standing behind her man 😂 https://t.co/O7nW9C58V9 QT @ArtOfDialogue_: \"I'm not going to let y'all disrespect me like that,\" Juvenile chooses to get off...",
+      "@lufthansa Worst airline out there - embarrassing business class",
+      "@KaptainPetrovs @htTweets No question - terrible experience & his issue has been resolved, also when the refurb happens I’m sure this will change. That said the first class fare for that sector in Oct...",
+      "@AmericanAir Beyond pathetic. QT @garyleff: American Airlines Is Serving $1 Shelf Stable Pasta In First Class. Is Premium Travel Dead? - View from the Wing https://t.co/xtw32EFNj7"
+    ],
+    "ユーモア界隈": [
+      "First-class passengers on British Airways' Boeing 747 have raised concerns about a redesign featuring windows in select lavatories. A female traveler heading to New York voiced unease over the absence...",
+      "His wife in the back is so real cause period she standing behind her man 😂 https://t.co/O7nW9C58V9 QT @ArtOfDialogue_: \"I'm not going to let y'all disrespect me like that,\" Juvenile chooses to get off...",
+      "I actually like the windows. The bathroom already small and cramped and let a lil sun in there to make it feel less like you're in a prison https://t.co/UWOLWCGsBx QT @Turbinetraveler: Passengers flyi...",
+      "Soon in Turany International Airport 😁 https://t.co/ARpFwVn8aJ QT @Aircraft_Spottr: Really looking forward to trying Ryanair's new first class...... https://t.co/5SBvPzUVjD",
+      "@Dean_J1943 @Ryanair Its called business class haha"
+    ],
+    "ニュース拡散界隈": [
+      "False accusation or real story? https://t.co/NYw6BJYpVt QT @nypost: NYC CEO told ‘Men just do stuff like that,’ after fellow American Airlines passenger masturbated for an hour in first class: Lawsuit...",
+      "Surely calls for lots of duct tape? Trust me, it’s a lot more civilized where we plebs ride, way back in rows 90-99 with our knees rammed against our chests… https://t.co/ykuIaGe59Y QT @MikeSington: W...",
+      "His wife in the back is so real cause period she standing behind her man 😂 https://t.co/O7nW9C58V9 QT @ArtOfDialogue_: \"I'm not going to let y'all disrespect me like that,\" Juvenile chooses to get off...",
+      "I actually like the windows. The bathroom already small and cramped and let a lil sun in there to make it feel less like you're in a prison https://t.co/UWOLWCGsBx QT @Turbinetraveler: Passengers flyi...",
+      "Soon in Turany International Airport 😁 https://t.co/ARpFwVn8aJ QT @Aircraft_Spottr: Really looking forward to trying Ryanair's new first class...... https://t.co/5SBvPzUVjD"
+    ],
+    "インシデント界隈": [
+      "Surely calls for lots of duct tape? Trust me, it’s a lot more civilized where we plebs ride, way back in rows 90-99 with our knees rammed against our chests… https://t.co/ykuIaGe59Y QT @MikeSington: W...",
+      "Chaos in American Airlines business class as passenger is thrown to the floor by flight attendant she then threatens to ‘kick in the balls’ #AmericanAirlines #Flightattendant https://t.co/yMV0h7uX36",
+      "American Airlines flight diverted after first-class passenger starts openly vaping: report ⁦⁦@Heather_Poole⁩ https://t.co/jEcAilACex",
+      "Looks like the airline version of the Short Bus. https://t.co/mtqW892eex QT @MikeSington: Woman tries to barge into cockpit of American Airlines flight to New York. Flight attendant tackles her to the...",
+      "British Airways and the City of Joburg: Same Failure, Just 35,000 Feet Apart Last week, British Airways cancelled my flight. I wasn’t surprised. The signs were there, I even flagged it to them in adva..."
+    ],
+    "マイラー界隈": [
+      "Air France-KLM Flying Blue Promo Rewards: Business Class For 45K Miles https://t.co/D4F4TfsTos",
+      "The Iberia Airlines Club in Madrid which we were able to enjoy as an American Airlines customer was fantastic. @AmericanAir QT @BillMiami: The VIP lounge for American Airlines business class customers...",
+      "The American airline industry is in the dinosaur age when it comes to customer service. WiFi should be free at the very least for 1st and Business class. https://t.co/K04RrQtWI5 QT @MarioNawfal: 🇫🇷 AI...",
+      "pretty frustrated with Alaska Airlines since we booked business class with Alaska from Mexico City with a partner American Airlines and then we were also first class coming from LAX to San Jose and we...",
+      "@UnacceptableOne Virgin Atlantic is always a good one, they also partner with Air France! They had tons of 40k business class seats dropped for 2025 last week plus there’s a 40% transfer bonus right n..."
+    ],
+    "政治界隈": [
+      "@NorthrnPrspectv 'Nuff said: https://t.co/mjZ7DmJuIP QT @Trudeaus_Ego: This morning, Minister of Pensions @theJagmeetSingh was caught living like the average Joe. While sitting in a $5,000 First Class...",
+      "Google! No! Bad! https://t.co/XzpkNVoxfQ https://t.co/ZS0xwoexAV QT @libsoftiktok: NEW: First class passenger alleges that American Airlines bumped him to make room for Joe Biden https://t.co/Gh47Cxqx...",
+      "No respect these days QT @whatsn2day: Trump loyalist in MAGA hat says she was discriminated against in first class on American Airlines flight: A conservative journalist claimed she was discriminated ...",
+      "@ryangerritsen So many reasons... https://t.co/mjZ7DmJuIP QT @Trudeaus_Ego: This morning, Minister of Pensions @theJagmeetSingh was caught living like the average Joe. While sitting in a $5,000 First ...",
+      "Good one. I think that’s exactly what Donald Trump would have said to that “nasty woman.” https://t.co/T05snEUoiU QT @614clinton: My wife was at this bougie hairdresser getting her hair done before a ..."
+    ],
+    "レビュアー界隈": [
+      "Enjoying a Flight on Air Canada's Signature Business Class Service Vancouver - Ottawa https://t.co/5GkZDU1Rh9",
+      "Flying Solo in Air France First Class :) https://t.co/f2FPKOVTFm via @YouTube",
+      "@KaptainPetrovs @htTweets No question - terrible experience & his issue has been resolved, also when the refurb happens I’m sure this will change. That said the first class fare for that sector in Oct...",
+      "The American airline industry is in the dinosaur age when it comes to customer service. WiFi should be free at the very least for 1st and Business class. https://t.co/K04RrQtWI5 QT @MarioNawfal: 🇫🇷 AI...",
+      "Looking to travel business this summer? Here's my review of flying business class on British Airways! https://t.co/ZpXr8HcQnm #newblogpost"
+    ]
+  }
+}
