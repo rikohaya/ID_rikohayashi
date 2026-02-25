@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>3IP 感情分析レポート</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1 { border-bottom: 2px solid #333; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-top: 40px; }
+        h3 { color: #555; }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<h1>3IP 感情ワード分析レポート</h1>
+<h2>ちいかわ / らぶいーず / おぱんちゅうさぎ</h2>
+<p><strong>分析期間</strong>: 2026/1/8 〜 2026/2/5（約1ヶ月）
+<strong>データソース</strong>: Talkwalker（Twitter/X）</p>
+<hr />
+<h2>1. 基本統計</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">IP</th>
+<th style="text-align: right;">投稿数</th>
+<th style="text-align: right;">日平均</th>
+<th style="text-align: right;">ノイズ除去後</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ちいかわ</td>
+<td style="text-align: right;">50,000件</td>
+<td style="text-align: right;">1,500件/日</td>
+<td style="text-align: right;">-</td>
+</tr>
+<tr>
+<td style="text-align: left;">おぱんちゅうさぎ</td>
+<td style="text-align: right;">7,549件</td>
+<td style="text-align: right;">270件/日</td>
+<td style="text-align: right;">6,732件</td>
+</tr>
+<tr>
+<td style="text-align: left;">らぶいーず</td>
+<td style="text-align: right;">511件</td>
+<td style="text-align: right;">18件/日</td>
+<td style="text-align: right;">-</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>2. 感情カテゴリ別比較（1000投稿あたり正規化）</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">カテゴリ</th>
+<th style="text-align: right;">ちいかわ</th>
+<th style="text-align: right;">らぶいーず</th>
+<th style="text-align: right;">おぱんちゅ</th>
+<th style="text-align: center;">最多</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>【喜】嬉しい・幸せ</strong></td>
+<td style="text-align: right;">61.7</td>
+<td style="text-align: right;"><strong>315.1</strong></td>
+<td style="text-align: right;">105.0</td>
+<td style="text-align: center;">らぶいーず</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>【怒】怒り・イライラ</strong></td>
+<td style="text-align: right;">6.7</td>
+<td style="text-align: right;"><strong>7.8</strong></td>
+<td style="text-align: right;">5.9</td>
+<td style="text-align: center;">らぶいーず</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>【哀】悲しい・寂しい</strong></td>
+<td style="text-align: right;">54.0</td>
+<td style="text-align: right;">33.3</td>
+<td style="text-align: right;"><strong>57.3</strong></td>
+<td style="text-align: center;">おぱんちゅ</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>【楽】面白い・笑い</strong></td>
+<td style="text-align: right;">72.8</td>
+<td style="text-align: right;">88.1</td>
+<td style="text-align: right;"><strong>121.7</strong></td>
+<td style="text-align: center;">おぱんちゅ</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>【愛】好き・愛情</strong></td>
+<td style="text-align: right;">325.9</td>
+<td style="text-align: right;"><strong>1692.8</strong></td>
+<td style="text-align: right;">363.5</td>
+<td style="text-align: center;">らぶいーず</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>【驚】驚き・興奮</strong></td>
+<td style="text-align: right;"><strong>161.4</strong></td>
+<td style="text-align: right;">121.3</td>
+<td style="text-align: right;">152.7</td>
+<td style="text-align: center;">ちいかわ</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>【欲】欲しい・羨望</strong></td>
+<td style="text-align: right;"><strong>130.6</strong></td>
+<td style="text-align: right;">29.4</td>
+<td style="text-align: right;">60.8</td>
+<td style="text-align: center;">ちいかわ</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>【謝】感謝</strong></td>
+<td style="text-align: right;">60.6</td>
+<td style="text-align: right;">113.5</td>
+<td style="text-align: right;"><strong>136.1</strong></td>
+<td style="text-align: center;">おぱんちゅ</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>【安】安心・癒し</strong></td>
+<td style="text-align: right;">19.7</td>
+<td style="text-align: right;"><strong>47.0</strong></td>
+<td style="text-align: right;">11.4</td>
+<td style="text-align: center;">らぶいーず</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>【恐】恐怖・不安</strong></td>
+<td style="text-align: right;"><strong>12.9</strong></td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: center;">ちいかわ</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>【困】困惑・諦め</strong></td>
+<td style="text-align: right;">22.4</td>
+<td style="text-align: right;"><strong>23.5</strong></td>
+<td style="text-align: right;">21.4</td>
+<td style="text-align: center;">らぶいーず</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. 感情ワードランキング TOP10</h2>
+<h3>ちいかわ</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">順位</th>
+<th style="text-align: left;">ワード</th>
+<th style="text-align: right;">出現数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">欲しい</td>
+<td style="text-align: right;">2,695回</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">好き</td>
+<td style="text-align: right;">2,487回</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">笑</td>
+<td style="text-align: right;">2,175回</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">可愛い</td>
+<td style="text-align: right;">2,077回</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">かわいい</td>
+<td style="text-align: right;">1,941回</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">可愛すぎ</td>
+<td style="text-align: right;">1,674回</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">ありがと</td>
+<td style="text-align: right;">1,135回</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">ありがとう</td>
+<td style="text-align: right;">1,071回</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">推し</td>
+<td style="text-align: right;">899回</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">嬉しい</td>
+<td style="text-align: right;">685回</td>
+</tr>
+</tbody>
+</table>
+<h3>らぶいーず</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">順位</th>
+<th style="text-align: left;">ワード</th>
+<th style="text-align: right;">出現数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">楽しみ</td>
+<td style="text-align: right;">117回</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">好き</td>
+<td style="text-align: right;">34回</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">かわいい</td>
+<td style="text-align: right;">26回</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">ありがとう</td>
+<td style="text-align: right;">24回</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">笑</td>
+<td style="text-align: right;">22回</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">推し</td>
+<td style="text-align: right;">21回</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">すき</td>
+<td style="text-align: right;">18回</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">可愛い</td>
+<td style="text-align: right;">17回</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">癒やされ</td>
+<td style="text-align: right;">12回</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">大好き</td>
+<td style="text-align: right;">10回</td>
+</tr>
+</tbody>
+</table>
+<h3>おぱんちゅうさぎ（ノイズ除去後）</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">順位</th>
+<th style="text-align: left;">ワード</th>
+<th style="text-align: right;">出現数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">笑</td>
+<td style="text-align: right;">480回</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">ありがと</td>
+<td style="text-align: right;">407回</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">好き</td>
+<td style="text-align: right;">392回</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">ありがとう</td>
+<td style="text-align: right;">373回</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">可愛い</td>
+<td style="text-align: right;">370回</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">かわいい</td>
+<td style="text-align: right;">296回</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">楽しみ</td>
+<td style="text-align: right;">228回</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">欲しい</td>
+<td style="text-align: right;">145回</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: left;">www</td>
+<td style="text-align: right;">142回</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: left;">カワイイ</td>
+<td style="text-align: right;">132回</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. カテゴリ別 上位ワード内訳</h2>
+<h3>【喜】嬉しい・幸せ</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">IP</th>
+<th style="text-align: left;">TOP5ワード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ちいかわ</td>
+<td style="text-align: left;">嬉しい(685), ハッピー(472), 最高(390), 楽しみ(390), 良かった(226)</td>
+</tr>
+<tr>
+<td style="text-align: left;">らぶいーず</td>
+<td style="text-align: left;">楽しみ(117), 幸せ(10), 嬉しい(8)</td>
+</tr>
+<tr>
+<td style="text-align: left;">おぱんちゅ</td>
+<td style="text-align: left;">楽しみ(228), 嬉しい(109), 楽しい(91), 最高(78)</td>
+</tr>
+</tbody>
+</table>
+<h3>【怒】怒り・イライラ</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">IP</th>
+<th style="text-align: left;">TOP5ワード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ちいかわ</td>
+<td style="text-align: left;">クソ(86), くそ(66), 怒(65), 最悪(22)</td>
+</tr>
+<tr>
+<td style="text-align: left;">らぶいーず</td>
+<td style="text-align: left;">イライラ(2), くそ(2)</td>
+</tr>
+<tr>
+<td style="text-align: left;">おぱんちゅ</td>
+<td style="text-align: left;">怒(14), ふざけ(6), ひどい(4)</td>
+</tr>
+</tbody>
+</table>
+<h3>【哀】悲しい・寂しい</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">IP</th>
+<th style="text-align: left;">TOP5ワード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ちいかわ</td>
+<td style="text-align: left;">😭(1883), 涙(186), 😢(139), 泣く(97), 泣ける(97)</td>
+</tr>
+<tr>
+<td style="text-align: left;">らぶいーず</td>
+<td style="text-align: left;">😭(11), 涙(5)</td>
+</tr>
+<tr>
+<td style="text-align: left;">おぱんちゅ</td>
+<td style="text-align: left;">😭(280), 涙(36), 😢(22), 残念(10)</td>
+</tr>
+</tbody>
+</table>
+<h3>【楽】面白い・笑い</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">IP</th>
+<th style="text-align: left;">TOP5ワード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ちいかわ</td>
+<td style="text-align: left;">笑(2175), www(506), 草(461), おもろい(125)</td>
+</tr>
+<tr>
+<td style="text-align: left;">らぶいーず</td>
+<td style="text-align: left;">笑(22), www(10), ネタ(5)</td>
+</tr>
+<tr>
+<td style="text-align: left;">おぱんちゅ</td>
+<td style="text-align: left;">笑(480), www(142), ネタ(98), 草(20)</td>
+</tr>
+</tbody>
+</table>
+<h3>【愛】好き・愛情</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">IP</th>
+<th style="text-align: left;">TOP5ワード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ちいかわ</td>
+<td style="text-align: left;">愛(4856), 好き(2487), 可愛い(2077), かわいい(1941)</td>
+</tr>
+<tr>
+<td style="text-align: left;">らぶいーず</td>
+<td style="text-align: left;">らぶ(688), 愛(36), 好き(34), かわいい(26)</td>
+</tr>
+<tr>
+<td style="text-align: left;">おぱんちゅ</td>
+<td style="text-align: left;">愛(793), 好き(392), 可愛い(370), かわいい(296)</td>
+</tr>
+</tbody>
+</table>
+<h3>【驚】驚き・興奮</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">IP</th>
+<th style="text-align: left;">TOP5ワード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ちいかわ</td>
+<td style="text-align: left;">！！(4555), まじ(586), やばい(533), !!(496), マジ(437)</td>
+</tr>
+<tr>
+<td style="text-align: left;">らぶいーず</td>
+<td style="text-align: left;">！！(38), ほんと(6), !!(4), やばい(2)</td>
+</tr>
+<tr>
+<td style="text-align: left;">おぱんちゅ</td>
+<td style="text-align: left;">！！(605), !!(80), 本当(76), ほんと(48)</td>
+</tr>
+</tbody>
+</table>
+<h3>【欲】欲しい・羨望</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">IP</th>
+<th style="text-align: left;">TOP5ワード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ちいかわ</td>
+<td style="text-align: left;">欲しい(2695), 羨まし(2211), ほしい(542), ずるい(344)</td>
+</tr>
+<tr>
+<td style="text-align: left;">らぶいーず</td>
+<td style="text-align: left;">欲しい(8), ほしい(5)</td>
+</tr>
+<tr>
+<td style="text-align: left;">おぱんちゅ</td>
+<td style="text-align: left;">欲しい(145), ほしい(108), 羨まし(51)</td>
+</tr>
+</tbody>
+</table>
+<h3>【謝】感謝</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">IP</th>
+<th style="text-align: left;">TOP5ワード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ちいかわ</td>
+<td style="text-align: left;">ありがと(1135), ありがとう(1071), 感謝(100)</td>
+</tr>
+<tr>
+<td style="text-align: left;">らぶいーず</td>
+<td style="text-align: left;">ありがとう(24), ありがと(24)</td>
+</tr>
+<tr>
+<td style="text-align: left;">おぱんちゅ</td>
+<td style="text-align: left;">ありがと(407), ありがとう(373), 感謝(19)</td>
+</tr>
+</tbody>
+</table>
+<h3>【安】安心・癒し</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">IP</th>
+<th style="text-align: left;">TOP5ワード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ちいかわ</td>
+<td style="text-align: left;">癒し(373), 優しい(236), 癒される(82), ほっこり(72)</td>
+</tr>
+<tr>
+<td style="text-align: left;">らぶいーず</td>
+<td style="text-align: left;">癒やされ(12), 安心(6), ほっと(3)</td>
+</tr>
+<tr>
+<td style="text-align: left;">おぱんちゅ</td>
+<td style="text-align: left;">優しい(24), 癒し(21), 安心(11)</td>
+</tr>
+</tbody>
+</table>
+<h3>【恐】恐怖・不安</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">IP</th>
+<th style="text-align: left;">TOP5ワード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ちいかわ</td>
+<td style="text-align: left;">怖い(301), ホラー(167), 不安(51), 心配(33)</td>
+</tr>
+<tr>
+<td style="text-align: left;">らぶいーず</td>
+<td style="text-align: left;">怖い(2), ふあん(2)</td>
+</tr>
+<tr>
+<td style="text-align: left;">おぱんちゅ</td>
+<td style="text-align: left;">ドキドキ(24), 怖い(9), 心配(6)</td>
+</tr>
+</tbody>
+</table>
+<h3>【困】困惑・諦め</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">IP</th>
+<th style="text-align: left;">TOP5ワード</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ちいかわ</td>
+<td style="text-align: left;">売り切れ(255), 疲れ(208), 無理(167), 完売(141)</td>
+</tr>
+<tr>
+<td style="text-align: left;">らぶいーず</td>
+<td style="text-align: left;">完売(7), 無理(2)</td>
+</tr>
+<tr>
+<td style="text-align: left;">おぱんちゅ</td>
+<td style="text-align: left;">疲れ(52), 売り切れ(18), 無理(14)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>5. 各IPの感情プロファイル</h2>
+<h3>ちいかわ</h3>
+<pre><code>驚 ████████████████ 161.4  ← 最多
+欲 █████████████ 130.6     ← 最多
+恐 █ 12.9                  ← 最多
+</code></pre>
+<p><strong>特徴</strong>: グッズへの強い物欲、作品のホラー要素への反応、驚きのリアクション文化</p>
+<h3>らぶいーず</h3>
+<pre><code>愛 ████████████████████████████████ 1692.8 ← 圧倒的
+喜 ████████ 315.1                         ← 最多
+安 █ 47.0                                 ← 最多
+</code></pre>
+<p><strong>特徴</strong>: IPそのものへの純粋な愛着、イベントへの期待、癒しコンテンツとしての消費</p>
+<h3>おぱんちゅうさぎ</h3>
+<pre><code>楽 ███████ 121.7   ← 最多
+謝 ████ 136.1      ← 最多
+哀 █ 57.3          ← 最多
+</code></pre>
+<p><strong>特徴</strong>: シュールさへの「笑」、ファン同士の交流、キャラの「可哀想」設定への共感</p>
+<hr />
+<h2>6. インサイトまとめ</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">IP</th>
+<th style="text-align: left;">感情特性</th>
+<th style="text-align: left;">解釈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>ちいかわ</strong></td>
+<td style="text-align: left;">【驚】【欲】【恐】が高い</td>
+<td style="text-align: left;">グッズへの強い物欲、作品のホラー要素への反応、驚きのリアクション文化</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>らぶいーず</strong></td>
+<td style="text-align: left;">【愛】【喜】【安】が突出</td>
+<td style="text-align: left;">IPそのものへの純粋な愛着、イベントへの期待、癒しコンテンツとしての消費</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>おぱんちゅうさぎ</strong></td>
+<td style="text-align: left;">【楽】【謝】【哀】が高い</td>
+<td style="text-align: left;">シュールさへの「笑」、ファン同士の「ありがとう」、キャラの「可哀想」設定への共感</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>7. 特徴的な発見</h2>
+<ol>
+<li><strong>らぶいーずの【愛】スコアが異常値</strong>（1692.8）</li>
+<li>
+<p>IP名に「らぶ」が含まれるため自動検出される影響あり</p>
+</li>
+<li>
+<p><strong>ちいかわの【哀】は絵文字😭が大半</strong></p>
+</li>
+<li>
+<p>ポジティブな文脈での使用が多い（「可愛すぎて😭」等）</p>
+</li>
+<li>
+<p><strong>おぱんちゅの【楽】が最高</strong></p>
+</li>
+<li>
+<p>「笑」「ネタ」が多く、エンタメ性の高さを示す</p>
+</li>
+<li>
+<p><strong>ちいかわの【困】は物販関連</strong></p>
+</li>
+<li>「売り切れ」「完売」が上位 = グッズ争奪戦の激しさ</li>
+</ol>
+<hr />
+<h2>8. 主要トピック分析</h2>
+<h3>ちいかわ</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">トピック</th>
+<th style="text-align: right;">言及数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">シール（ボンドロ等）</td>
+<td style="text-align: right;">11,038回</td>
+</tr>
+<tr>
+<td style="text-align: left;">グッズ・ぬいぐるみ</td>
+<td style="text-align: right;">6,420回</td>
+</tr>
+<tr>
+<td style="text-align: left;">交換・取引</td>
+<td style="text-align: right;">6,360回</td>
+</tr>
+<tr>
+<td style="text-align: left;">ガチャ・くじ</td>
+<td style="text-align: right;">3,559回</td>
+</tr>
+<tr>
+<td style="text-align: left;">アニメ・漫画</td>
+<td style="text-align: right;">1,439回</td>
+</tr>
+<tr>
+<td style="text-align: left;">松屋コラボ等</td>
+<td style="text-align: right;">1,280回</td>
+</tr>
+</tbody>
+</table>
+<h3>おぱんちゅうさぎ</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">トピック</th>
+<th style="text-align: right;">言及数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">んぽちゃむ語（ちゃむ・でちゅ）</td>
+<td style="text-align: right;">1,375回</td>
+</tr>
+<tr>
+<td style="text-align: left;">ぬいぐるみ・グッズ</td>
+<td style="text-align: right;">417回</td>
+</tr>
+<tr>
+<td style="text-align: left;">シール・ボンドロ</td>
+<td style="text-align: right;">354回</td>
+</tr>
+<tr>
+<td style="text-align: left;">ドンキコラボ</td>
+<td style="text-align: right;">219回</td>
+</tr>
+<tr>
+<td style="text-align: left;">電車ラッピング</td>
+<td style="text-align: right;">156回</td>
+</tr>
+<tr>
+<td style="text-align: left;">たまごっちコラボ</td>
+<td style="text-align: right;">86回</td>
+</tr>
+</tbody>
+</table>
+<h3>らぶいーず</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">トピック</th>
+<th style="text-align: right;">言及数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">カフェ（CAFE）</td>
+<td style="text-align: right;">32回</td>
+</tr>
+<tr>
+<td style="text-align: left;">ストア関連</td>
+<td style="text-align: right;">75回</td>
+</tr>
+<tr>
+<td style="text-align: left;">ぷにらぶ（ゲーム）</td>
+<td style="text-align: right;">34回</td>
+</tr>
+<tr>
+<td style="text-align: left;">バレンタイン</td>
+<td style="text-align: right;">32回</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>9. 人気キャラランキング</h2>
+<h3>ちいかわ</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">順位</th>
+<th style="text-align: left;">キャラクター</th>
+<th style="text-align: right;">言及数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">ちいかわ</td>
+<td style="text-align: right;">53,688回</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">うさぎ</td>
+<td style="text-align: right;">8,599回</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">ハチワレ</td>
+<td style="text-align: right;">6,886回</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">モモンガ</td>
+<td style="text-align: right;">4,095回</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">くりまんじゅう</td>
+<td style="text-align: right;">3,432回</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">ラッコ</td>
+<td style="text-align: right;">1,572回</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: left;">シーサー</td>
+<td style="text-align: right;">1,464回</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: left;">古本屋</td>
+<td style="text-align: right;">1,286回</td>
+</tr>
+</tbody>
+</table>
+<h3>らぶいーず</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">順位</th>
+<th style="text-align: left;">キャラクター</th>
+<th style="text-align: right;">言及数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">すもっぴ</td>
+<td style="text-align: right;">103回</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">ぴょんちー</td>
+<td style="text-align: right;">67回</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">うるる</td>
+<td style="text-align: right;">23回</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">にゃぽ</td>
+<td style="text-align: right;">4回</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">ぱおぱお</td>
+<td style="text-align: right;">3回</td>
+</tr>
+</tbody>
+</table>
+<h3>おぱんちゅうさぎ</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">順位</th>
+<th style="text-align: left;">キャラクター</th>
+<th style="text-align: right;">言及数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">おぱんちゅうさぎ</td>
+<td style="text-align: right;">8,908回</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">んぽちゃむ</td>
+<td style="text-align: right;">509回</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">きみまろ</td>
+<td style="text-align: right;">206回</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">つけま</td>
+<td style="text-align: right;">25回</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>10. データ品質に関する注意</h2>
+<h3>おぱんちゅうさぎのノイズ問題</h3>
+<ul>
+<li>「おぱんちゅ」が下着を意味する文脈で使用されるケースあり</li>
+<li>約10.6%（803件）がIP無関係のノイズと推定</li>
+<li>本レポートではノイズ除去後のデータ（6,732件）を使用</li>
+</ul>
+<h3>Talkwalkerクエリ改善提案</h3>
+<pre><code>NOT (えっち OR &quot;パンツ売&quot; OR &quot;下着売&quot; OR 裏垢 OR Tバック OR &quot;丸見え&quot; OR &quot;食い込&quot; OR びしょびしょ)
+</code></pre>
+<hr />
+<p><em>レポート作成日: 2026年2月6日</em></p>
+</body>
+</html>

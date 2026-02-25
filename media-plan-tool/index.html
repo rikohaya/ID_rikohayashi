@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>広告配信ボリューム計算ツール</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .add-segment-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .add-segment-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .segments-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .segment-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .segment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .segment-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .delete-btn {
+            background: #ff5757;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background: #e04545;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .form-group input[type="number"]::-webkit-outer-spin-button,
+        .form-group input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .preset-group {
+            grid-column: 1 / -1;
+        }
+
+        .preset-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .preset-btn {
+            background: #f0f4ff;
+            border: 1px solid #ddd;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #555;
+        }
+
+        .preset-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .results-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            padding-top: 16px;
+            border-top: 2px solid #f0f4ff;
+        }
+
+        .result-item {
+            text-align: center;
+            padding: 12px;
+            background: #f8f9ff;
+            border-radius: 10px;
+        }
+
+        .result-label {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .result-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .total-card {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 20px;
+        }
+
+        .total-card h3 {
+            font-size: 1rem;
+            margin-bottom: 16px;
+            opacity: 0.9;
+        }
+
+        .total-card .results-row {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .total-card .result-item {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .total-card .result-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .total-card .result-value {
+            color: #ffd700;
+        }
+
+        .unit {
+            font-size: 0.75rem;
+            font-weight: normal;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 広告配信ボリューム計算ツール</h1>
+            <p>セグメント別のリーチ数・インプレッション・広告費を計算</p>
+        </header>
+
+        <button class="add-segment-btn" onclick="addSegment()">
+            + セグメントを追加
+        </button>
+
+        <div class="segments-container" id="segments-container">
+            <!-- Segments will be added here -->
+        </div>
+
+        <div class="total-card" id="total-card" style="display: none;">
+            <h3>📈 合計</h3>
+            <div class="results-row">
+                <div class="result-item">
+                    <div class="result-label">リーチ数</div>
+                    <div class="result-value"><span id="total-reach">0</span><span class="unit">万人</span></div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">インプレッション</div>
+                    <div class="result-value"><span id="total-impressions">0</span><span class="unit">万</span></div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">広告費</div>
+                    <div class="result-value"><span id="total-cost">0</span><span class="unit">万円</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ターゲット人口プリセットデータ
+        const presets = [
+            { label: 'X 40-50代男性', population: 650, media: 'x', target: '40-50代男性' },
+            { label: 'X 30-40代ビジネス層', population: 580, media: 'x', target: '30-40代ビジネス層' },
+            { label: 'IG 更年期女性(45-55歳)', population: 400, media: 'instagram', target: '更年期女性(45-55歳)' },
+            { label: 'IG 20-30代女性', population: 920, media: 'instagram', target: '20-30代女性' },
+            { label: 'TikTok 韓国好き若年層(15-29歳)', population: 810, media: 'tiktok', target: '韓国好き若年層(15-29歳)' },
+            { label: 'TikTok Z世代(18-27歳)', population: 750, media: 'tiktok', target: 'Z世代(18-27歳)' },
+            { label: 'YouTube 全年代', population: 6500, media: 'youtube', target: '全年代' },
+            { label: 'LINE 30-50代主婦層', population: 1200, media: 'line', target: '30-50代主婦層' },
+        ];
+
+        // デフォルトCPM設定（媒体別）
+        const defaultCPM = {
+            'x': 300,
+            'instagram': 400,
+            'tiktok': 350,
+            'youtube': 500,
+            'line': 250,
+            'facebook': 350
+        };
+
+        let segmentCount = 0;
+        const segments = {};
+
+        function addSegment() {
+            segmentCount++;
+            const segmentId = `segment-${segmentCount}`;
+
+            const segmentHTML = `
+                <div class="segment-card" id="${segmentId}" data-segment-id="${segmentId}">
+                    <div class="segment-header">
+                        <span class="segment-title">セグメント ${segmentCount}</span>
+                        <button class="delete-btn" onclick="deleteSegment('${segmentId}')">削除</button>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>媒体</label>
+                            <select id="${segmentId}-media" onchange="onMediaChange('${segmentId}')">
+                                <option value="x">X (Twitter)</option>
+                                <option value="instagram">Instagram</option>
+                                <option value="tiktok">TikTok</option>
+                                <option value="youtube">YouTube</option>
+                                <option value="line">LINE</option>
+                                <option value="facebook">Facebook</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>ターゲット</label>
+                            <input type="text" id="${segmentId}-target" placeholder="例: 40-50代男性" oninput="calculate()">
+                        </div>
+
+                        <div class="form-group">
+                            <label>ターゲット人口（万人）</label>
+                            <input type="number" id="${segmentId}-population" value="500" min="1" oninput="calculate()">
+                        </div>
+
+                        <div class="form-group">
+                            <label>リーチ率（%）</label>
+                            <input type="number" id="${segmentId}-reachRate" value="30" min="1" max="100" oninput="calculate()">
+                        </div>
+
+                        <div class="form-group">
+                            <label>フリークエンシー（回）</label>
+                            <input type="number" id="${segmentId}-frequency" value="2.0" min="0.1" step="0.1" oninput="calculate()">
+                        </div>
+
+                        <div class="form-group">
+                            <label>CPM（円）</label>
+                            <input type="number" id="${segmentId}-cpm" value="300" min="1" oninput="calculate()">
+                        </div>
+
+                        <div class="form-group preset-group">
+                            <label>プリセットから選択</label>
+                            <div class="preset-buttons">
+                                ${presets.map((p, i) => `<button class="preset-btn" onclick="applyPreset('${segmentId}', ${i})">${p.label}</button>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="results-row">
+                        <div class="result-item">
+                            <div class="result-label">リーチ数</div>
+                            <div class="result-value"><span id="${segmentId}-reach">150</span><span class="unit">万人</span></div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">インプレッション</div>
+                            <div class="result-value"><span id="${segmentId}-impressions">300</span><span class="unit">万</span></div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-label">広告費</div>
+                            <div class="result-value"><span id="${segmentId}-cost">90</span><span class="unit">万円</span></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('segments-container').insertAdjacentHTML('beforeend', segmentHTML);
+            segments[segmentId] = true;
+
+            calculate();
+            updateTotalVisibility();
+        }
+
+        function deleteSegment(segmentId) {
+            const element = document.getElementById(segmentId);
+            if (element) {
+                element.remove();
+                delete segments[segmentId];
+                calculate();
+                updateTotalVisibility();
+            }
+        }
+
+        function onMediaChange(segmentId) {
+            const media = document.getElementById(`${segmentId}-media`).value;
+            document.getElementById(`${segmentId}-cpm`).value = defaultCPM[media] || 300;
+            calculate();
+        }
+
+        function applyPreset(segmentId, presetIndex) {
+            const preset = presets[presetIndex];
+            document.getElementById(`${segmentId}-media`).value = preset.media;
+            document.getElementById(`${segmentId}-target`).value = preset.target;
+            document.getElementById(`${segmentId}-population`).value = preset.population;
+            document.getElementById(`${segmentId}-cpm`).value = defaultCPM[preset.media] || 300;
+            calculate();
+        }
+
+        function calculate() {
+            let totalReach = 0;
+            let totalImpressions = 0;
+            let totalCost = 0;
+
+            Object.keys(segments).forEach(segmentId => {
+                const population = parseFloat(document.getElementById(`${segmentId}-population`).value) || 0;
+                const reachRate = parseFloat(document.getElementById(`${segmentId}-reachRate`).value) || 0;
+                const frequency = parseFloat(document.getElementById(`${segmentId}-frequency`).value) || 0;
+                const cpm = parseFloat(document.getElementById(`${segmentId}-cpm`).value) || 0;
+
+                // 計算（万人単位）
+                const reach = population * (reachRate / 100);
+                const impressions = reach * frequency;
+                const cost = (impressions * 10000 / 1000) * cpm / 10000; // 万円に変換
+
+                // 表示更新
+                document.getElementById(`${segmentId}-reach`).textContent = formatNumber(reach);
+                document.getElementById(`${segmentId}-impressions`).textContent = formatNumber(impressions);
+                document.getElementById(`${segmentId}-cost`).textContent = formatNumber(cost);
+
+                // 合計に加算
+                totalReach += reach;
+                totalImpressions += impressions;
+                totalCost += cost;
+            });
+
+            // 合計を更新
+            document.getElementById('total-reach').textContent = formatNumber(totalReach);
+            document.getElementById('total-impressions').textContent = formatNumber(totalImpressions);
+            document.getElementById('total-cost').textContent = formatNumber(totalCost);
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000) {
+                return num.toLocaleString('ja-JP', { maximumFractionDigits: 0 });
+            }
+            return num.toLocaleString('ja-JP', { maximumFractionDigits: 1 });
+        }
+
+        function updateTotalVisibility() {
+            const segmentCount = Object.keys(segments).length;
+            const totalCard = document.getElementById('total-card');
+            totalCard.style.display = segmentCount > 0 ? 'block' : 'none';
+        }
+
+        // 初期状態で1つのセグメントを追加
+        addSegment();
+    </script>
+</body>
+</html>

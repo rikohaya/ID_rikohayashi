@@ -1,0 +1,50 @@
+{
+  "project": {
+    "total_budget": 150000000,
+    "period": "2025-07 ~ 2025-12"
+  },
+  "defaults": {
+    "follower_unit_price": 3,
+    "avg_followers": 150000,
+    "imp_rate": 0.2,
+    "cpm": 300,
+    "fq": 1.1
+  },
+  "tactics": [
+    {
+      "category": "美容レビュー",
+      "detail": "美容まとめ投稿",
+      "ad_type": "配信有",
+      "target": "美容マス層",
+      "sns": "IG Feed",
+      "allocation": 0.027,
+      "timing": "8月",
+      "follower_unit_price": 3,
+      "avg_followers": 100000,
+      "num_influencers": 4,
+      "imp_rate": 0.2,
+      "fq": 1.1
+    },
+    {
+      "category": "広告配信",
+      "detail": "美容まとめ投稿 / 話題化投稿（AD）",
+      "ad_type": "広告配信",
+      "target": "美容マス層",
+      "sns": "IG Feed",
+      "allocation": 0.02,
+      "timing": "8月",
+      "cpm": 250,
+      "fq": 2.5
+    },
+    {
+      "category": "ギフティング",
+      "detail": "ギフティング",
+      "ad_type": "配信無",
+      "target": "美容マス層",
+      "sns": "@cosme",
+      "allocation": 0.004,
+      "timing": "8月",
+      "num_influencers": 100
+    }
+  ]
+}

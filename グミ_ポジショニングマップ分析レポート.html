@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>グミ ポジショニングマップ分析レポート</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: #0f0f0f;
+    color: #333;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  .slide-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 80px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .slide.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== Slide 1: Title ===== */
+  .slide-title {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #fff;
+    text-align: center;
+  }
+  .slide-title h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    margin-bottom: 24px;
+    background: linear-gradient(90deg, #e2e2e2, #ffffff, #e2e2e2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .slide-title .subtitle {
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: #8ec5fc;
+    margin-bottom: 12px;
+  }
+  .slide-title .meta {
+    font-size: 0.95rem;
+    color: #667;
+    margin-top: 40px;
+  }
+  .slide-title .accent-line {
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(90deg, #e100ff, #7f5af0, #2cb67d);
+    margin: 20px auto;
+    border-radius: 2px;
+  }
+
+  /* ===== Common Slide Styles ===== */
+  .slide-content {
+    background: #ffffff;
+    padding: 50px 80px;
+    align-items: flex-start;
+  }
+  .slide-content h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 32px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #7f5af0;
+    width: 100%;
+  }
+  .slide-content h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #0f3460;
+    margin-bottom: 16px;
+    margin-top: 8px;
+  }
+  .slide-content ul {
+    list-style: none;
+    width: 100%;
+  }
+  .slide-content ul li {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    padding: 8px 0 8px 28px;
+    position: relative;
+    color: #444;
+  }
+  .slide-content ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 17px;
+    width: 10px;
+    height: 10px;
+    background: #7f5af0;
+    border-radius: 50%;
+  }
+  .slide-content .highlight {
+    color: #7f5af0;
+    font-weight: 700;
+  }
+  .slide-content .keyword {
+    display: inline-block;
+    background: #f0ebff;
+    color: #5a3fc0;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+
+  /* ===== ポジショニングマップ ===== */
+  .map-slide {
+    background: #f8f9fc;
+    padding: 40px 50px;
+  }
+  .map-slide h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  .map-wrapper {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .map-grid {
+    position: relative;
+    width: 900px;
+    height: 520px;
+  }
+  .map-axis-v {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #ccc;
+    transform: translateX(-50%);
+  }
+  .map-axis-h {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #ccc;
+    transform: translateY(-50%);
+  }
+  .map-label {
+    position: absolute;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1a1a2e;
+  }
+  .map-label.top { top: -4px; left: 50%; transform: translateX(-50%); }
+  .map-label.bottom { bottom: -4px; left: 50%; transform: translateX(-50%); }
+  .map-label.left { left: -4px; top: 50%; transform: translateY(-50%) rotate(0deg); }
+  .map-label.right { right: -4px; top: 50%; transform: translateY(-50%); }
+
+  .quadrant {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    padding: 28px 18px 10px 18px;
+    display: flex;
+    flex-direction: column;
+  }
+  .quadrant.q1 { top: 0; left: 0; }
+  .quadrant.q2 { top: 0; right: 0; }
+  .quadrant.q3 { bottom: 0; left: 0; }
+  .quadrant.q4 { bottom: 0; right: 0; }
+
+  .q-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+  }
+  .q1 .q-title { background: #e8f5e9; color: #2e7d32; }
+  .q2 .q-title { background: #e3f2fd; color: #1565c0; }
+  .q3 .q-title { background: #fff3e0; color: #e65100; }
+  .q4 .q-title { background: #fce4ec; color: #c62828; }
+
+  .q-items {
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  .q-items .new { color: #7f5af0; font-weight: 500; }
+  .q-items .existing { color: #999; }
+  .q-count {
+    font-size: 1.6rem;
+    font-weight: 900;
+    position: absolute;
+  }
+  .q1 .q-count { bottom: 14px; right: 18px; color: #a5d6a7; }
+  .q2 .q-count { bottom: 14px; left: 18px; color: #90caf9; }
+  .q3 .q-count { top: 14px; right: 18px; color: #ffcc80; }
+  .q4 .q-count { top: 14px; left: 18px; color: #ef9a9a; }
+
+  .map-legend {
+    margin-top: 12px;
+    font-size: 0.85rem;
+    color: #888;
+    text-align: center;
+    width: 100%;
+  }
+  .map-legend span { margin: 0 12px; }
+
+  /* ===== テーブル ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 12px;
+  }
+  table th {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+    color: #444;
+  }
+  table tr:nth-child(even) td { background: #f8f8fc; }
+  table tr:hover td { background: #f0ebff; }
+
+  /* ===== Bar Chart ===== */
+  .bar-chart {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .bar-label {
+    width: 200px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    text-align: right;
+    padding-right: 20px;
+    flex-shrink: 0;
+  }
+  .bar-track {
+    flex: 1;
+    height: 40px;
+    background: #f0f0f0;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 14px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: width 1s ease;
+  }
+  .bar-fill.purple { background: linear-gradient(90deg, #7f5af0, #a78bfa); }
+  .bar-fill.blue { background: linear-gradient(90deg, #0f3460, #3b82f6); }
+  .bar-fill.green { background: linear-gradient(90deg, #2cb67d, #6ee7b7); }
+
+  .bar-detail {
+    width: 80px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #999;
+    flex-shrink: 0;
+    padding-left: 12px;
+  }
+
+  /* ===== Insight cards ===== */
+  .insight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    width: 100%;
+    margin-top: 8px;
+  }
+  .insight-card {
+    background: #f8f9fc;
+    border-radius: 12px;
+    padding: 28px;
+    border-left: 4px solid #7f5af0;
+  }
+  .insight-card.orange { border-left-color: #f59e0b; }
+  .insight-card.blue { border-left-color: #3b82f6; }
+  .insight-card.green { border-left-color: #2cb67d; }
+  .insight-card h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 10px;
+  }
+  .insight-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #555;
+  }
+
+  /* ===== Timeline ===== */
+  .timeline {
+    width: 100%;
+    position: relative;
+    margin-top: 10px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 60px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, #7f5af0, #2cb67d);
+    border-radius: 2px;
+  }
+  .timeline-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .timeline-year {
+    width: 60px;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #7f5af0;
+    text-align: right;
+    padding-right: 20px;
+    flex-shrink: 0;
+  }
+  .timeline-dot {
+    width: 16px;
+    height: 16px;
+    background: #7f5af0;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px #7f5af0;
+    flex-shrink: 0;
+    margin-top: 4px;
+    margin-right: 20px;
+  }
+  .timeline-content {
+    background: #f8f9fc;
+    padding: 16px 24px;
+    border-radius: 10px;
+    flex: 1;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #444;
+  }
+  .timeline-content strong { color: #1a1a2e; }
+
+  /* ===== Conclusion slide ===== */
+  .slide-conclusion {
+    background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+    color: #fff;
+    text-align: center;
+  }
+  .slide-conclusion h2 {
+    color: #fff;
+    border-bottom-color: #7f5af0;
+    text-align: center;
+  }
+  .conclusion-box {
+    display: flex;
+    gap: 40px;
+    margin-top: 20px;
+    width: 100%;
+    justify-content: center;
+  }
+  .conclusion-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 36px 32px;
+    flex: 1;
+    max-width: 400px;
+    text-align: left;
+  }
+  .conclusion-card h3 {
+    font-size: 1.15rem;
+    color: #ef4444;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  .conclusion-card h3.opp { color: #2cb67d; }
+  .conclusion-card p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #ccc;
+  }
+  .conclusion-card .big-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 12px;
+  }
+
+  /* ===== Navigation ===== */
+  .nav {
+    position: fixed;
+    bottom: 30px;
+    right: 40px;
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+  }
+  .nav button {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(26,26,46,0.85);
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    backdrop-filter: blur(8px);
+  }
+  .nav button:hover { background: #7f5af0; }
+  .nav button:disabled { opacity: 0.3; cursor: default; background: rgba(26,26,46,0.5); }
+
+  .page-indicator {
+    position: fixed;
+    bottom: 38px;
+    left: 40px;
+    font-size: 0.85rem;
+    color: #999;
+    z-index: 100;
+    font-weight: 500;
+  }
+  .slide-content .page-indicator,
+  .map-slide .page-indicator { color: #999; }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .slide { padding: 30px 40px; }
+    .slide-title h1 { font-size: 2.2rem; }
+    .map-grid { width: 700px; height: 420px; }
+    .insight-grid { grid-template-columns: 1fr; }
+    .conclusion-box { flex-direction: column; align-items: center; }
+  }
+</style>
+</head>
+<body>
+<div class="slide-container">
+
+  <!-- Slide 1: Title -->
+  <div class="slide slide-title active" data-slide="1">
+    <p class="subtitle">直近3年間（2023〜2026）新発売グミ調査</p>
+    <h1>グミ市場<br>ポジショニングマップ分析</h1>
+    <div class="accent-line"></div>
+    <p class="meta">分析軸：「食感（ハード ↔ ソフト）」×「味の方向性（果汁感 ↔ 刺激系）」</p>
+  </div>
+
+  <!-- Slide 2: 調査概要 -->
+  <div class="slide slide-content" data-slide="2">
+    <h2>調査概要</h2>
+    <ul>
+      <li><strong>対象期間：</strong>2023〜2026年に新発売されたグミ（27商品）</li>
+      <li><strong>分析軸：</strong><span class="keyword">食感（ハード ↔ ソフト）</span> × <span class="keyword">味の方向性（果汁感・ナチュラル ↔ 刺激系）</span></li>
+      <li><strong>目的：</strong>直近3年間のグミ市場の新商品トレンドをポジショニングマップで可視化し、競合状況と市場機会を特定する</li>
+      <li><strong>対象メーカー：</strong>カンロ / カバヤ / 明治 / ロッテ / UHA味覚糖 / 不二家 / 森永 / バンダイ 他</li>
+    </ul>
+  </div>
+
+  <!-- Slide 3: ポジショニングマップ -->
+  <div class="slide slide-content map-slide" data-slide="3">
+    <h2>ポジショニングマップ</h2>
+    <div class="map-wrapper">
+      <div class="map-grid">
+        <div class="map-axis-v"></div>
+        <div class="map-axis-h"></div>
+        <div class="map-label top">果汁感・ナチュラル</div>
+        <div class="map-label bottom">刺激・酸味・人工的フレーバー</div>
+        <div class="map-label left">ハード</div>
+        <div class="map-label right">ソフト</div>
+
+        <!-- Q1: ハード × 果汁 -->
+        <div class="quadrant q1">
+          <div class="q-title">ハード × 果汁（2商品）</div>
+          <div class="q-items">
+            <span class="new">★ 果汁グミ 弾力プラス（明治）</span><br>
+            <span class="existing">○ タフグミ グレーピーパンチ</span>
+          </div>
+          <div class="q-count">2</div>
+        </div>
+
+        <!-- Q2: ソフト × 果汁 -->
+        <div class="quadrant q2">
+          <div class="q-title">ソフト × 果汁（10商品）</div>
+          <div class="q-items">
+            <span class="new">★ とろみ～グミ（カンロ/25）</span><br>
+            <span class="new">★ つぶグミPREMIUM 濃厚いちご（25）</span><br>
+            <span class="new">★ つぶグミPREMIUM 濃厚梨（24）</span><br>
+            <span class="new">★ ネクター厳選果実グミ（不二家/26）</span><br>
+            <span class="new">★ おとうふくん（カバヤ/24）</span><br>
+            <span class="new">★ ピックミー ピーチ（カンロ/25）</span><br>
+            <span class="new">★ もちゅグミ（25）</span><br>
+            <span class="new">★ むちもっちバナナグミ（25）</span><br>
+            <span class="new">★ 4Dグミ 各種（カンロ/23-25）</span><br>
+            <span class="existing">○ ピュアラルグミ（カバヤ）</span>
+          </div>
+          <div class="q-count">10</div>
+        </div>
+
+        <!-- Q3: ハード × 刺激 -->
+        <div class="quadrant q3">
+          <div class="q-title">ハード × 刺激（5商品）</div>
+          <div class="q-items">
+            <span class="new">★ KAZITTE!（ロッテ/25）</span><br>
+            <span class="new">★ 忍者めし ベイマックス（UHA/25）</span><br>
+            <span class="new">★ タフグミ グレフルフィーバー（カバヤ/26）</span><br>
+            <span class="new">★ 小梅グミ（ロッテ/26）</span><br>
+            <span class="existing">○ コーラアップ ザハード（明治）</span><br>
+            <span class="existing">○ タフグミPRO（カバヤ）</span>
+          </div>
+          <div class="q-count">5</div>
+        </div>
+
+        <!-- Q4: ソフト × 刺激/新食感 -->
+        <div class="quadrant q4">
+          <div class="q-title">ソフト × 刺激/新食感（10商品）</div>
+          <div class="q-items">
+            <span class="new">★ しゃりinグミ（カバヤ）</span><br>
+            <span class="new">★ ざくふにゅグミ（25）</span><br>
+            <span class="new">★ Gumidy グミinキャンディ（23）</span><br>
+            <span class="new">★ シークラゲグミ（カンロ/23）</span><br>
+            <span class="new">★ トッピンポップグミ（24）</span><br>
+            <span class="new">★ しらたまるグミ 梅味（23）</span><br>
+            <span class="new">★ エッセルスーパーカップ味グミ（26）</span><br>
+            <span class="new">★ もちっとグミチョコ（森永/24）</span><br>
+            <span class="new">★ 4Dグミ 悪魔の実（バンダイ/25）</span><br>
+            <span class="new">★ チョコがけミントグミ（ファミマ/24）</span>
+          </div>
+          <div class="q-count">10</div>
+        </div>
+      </div>
+    </div>
+    <div class="map-legend">
+      <span><span class="new" style="color:#7f5af0;">★</span> 直近3年の新商品</span>
+      <span><span class="existing" style="color:#999;">○</span> 既存 / リニューアル</span>
+    </div>
+  </div>
+
+  <!-- Slide 4: 象限別集計 -->
+  <div class="slide slide-content" data-slide="4">
+    <h2>象限別の集計</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>象限</th>
+          <th>新商品数</th>
+          <th>代表例</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>左上（ハード × 果汁）</strong></td>
+          <td>2</td>
+          <td>果汁グミ弾力プラス、タフグミ グレーピーパンチ</td>
+        </tr>
+        <tr>
+          <td><strong>右上（ソフト × 果汁）</strong></td>
+          <td>10</td>
+          <td>とろみ～グミ、つぶグミPREMIUM、4Dグミ各種、おとうふくん、もちゅグミ</td>
+        </tr>
+        <tr>
+          <td><strong>左下（ハード × 刺激）</strong></td>
+          <td>5</td>
+          <td>KAZITTE!、忍者めし、タフグミ グレフルフィーバー、小梅グミ</td>
+        </tr>
+        <tr>
+          <td><strong>右下（ソフト × 刺激/新食感）</strong></td>
+          <td>10</td>
+          <td>しゃりinグミ、ざくふにゅグミ、Gumidy、シークラゲグミ、トッピンポップグミ</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Slide 5: 仮説検証 -->
+  <div class="slide slide-content" data-slide="5">
+    <h2>仮説の検証</h2>
+    <h3 style="color:#7f5af0; font-size:1.2rem; margin-bottom:24px;">仮説：「ハード系と新食感系グミの発売が多い」</h3>
+    <p style="font-size:1.15rem; color:#333; margin-bottom:28px; line-height:1.6;">
+      <strong>結論：仮説は概ね正しい。</strong>ただし、より正確には<span class="highlight">「新食感系」の方がハード系より多い。</span>
+    </p>
+    <div class="bar-chart">
+      <div class="bar-row">
+        <div class="bar-label">新食感系</div>
+        <div class="bar-track">
+          <div class="bar-fill purple" style="width:56%;">56%</div>
+        </div>
+        <div class="bar-detail">15商品</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">ハード系</div>
+        <div class="bar-track">
+          <div class="bar-fill blue" style="width:26%;">26%</div>
+        </div>
+        <div class="bar-detail">7商品</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">従来型ソフト/果汁</div>
+        <div class="bar-track">
+          <div class="bar-fill green" style="width:18%;">18%</div>
+        </div>
+        <div class="bar-detail">5商品</div>
+      </div>
+    </div>
+    <p style="font-size:0.9rem; color:#999; margin-top:16px;">
+      新食感系 = しゃり・もちもち・とろける・4D立体等 ／ ハード系 = タフグミ派生・KAZITTE!・忍者めし等 ／ 従来型 = つぶグミPREMIUM・ネクター等
+    </p>
+  </div>
+
+  <!-- Slide 6: 詳細な傾向 -->
+  <div class="slide slide-content" data-slide="6">
+    <h2>詳細な傾向</h2>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <h4>1. 新食感系が最大勢力（56%）</h4>
+        <p>
+          カンロが4Dグミ・シークラゲ・とろみ～グミで「見た目×食感」の新カテゴリを開拓。<br>
+          「もちゅ」「むちもっち」「ざくふにゅ」など<strong>オノマトペ系ネーミング</strong>が2025年に急増。
+        </p>
+      </div>
+      <div class="insight-card orange">
+        <h4>2. ハード系も堅調（26%）</h4>
+        <p>
+          ロッテが約3年ぶりの新ブランド<strong>「KAZITTE!」</strong>でハード市場に参入（2025年）。<br>
+          カバヤはタフグミを軸にPRO・BAR・miniとサブライン拡張。
+        </p>
+      </div>
+      <div class="insight-card blue">
+        <h4>3. プレミアム果汁系は少数だが単価向上</h4>
+        <p>
+          つぶグミPREMIUM、ネクター厳選果実など「素材の質」で差別化。<br>
+          数は少ないが<strong>高単価・プレミアム路線</strong>として存在感。
+        </p>
+      </div>
+      <div class="insight-card green">
+        <h4>4. メーカー別の注目動向</h4>
+        <p>
+          <strong>カンロ</strong>が新食感カテゴリのリーダー。<br>
+          <strong>カバヤ</strong>はタフグミのサブライン展開で網羅的に攻める戦略。<br>
+          <strong>ロッテ</strong>がKAZITTE!・小梅グミでグミ市場に本格参入。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: 年別の変化 -->
+  <div class="slide slide-content" data-slide="7">
+    <h2>年別の変化</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">2023</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          4Dグミ・シークラゲなど<strong>SNS映え＋新食感</strong>の起点。カンロが新カテゴリを切り開く。
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2024</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          トッピンポップ・しゃりin等<strong>複合食感</strong>の多様化。つぶグミPREMIUMなどプレミアム化も進行。
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2025</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          KAZITTE!参入で<strong>ハード系競争激化</strong>。「もちゅ」「ざくふにゅ」等のオノマトペ食感商品が乱立。
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2026</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          タフグミ派生・小梅グミ等<strong>既存ブランドのグミ展開</strong>が加速。市場の成熟期に突入。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 8: マーケティング的示唆 -->
+  <div class="slide slide-conclusion" data-slide="8">
+    <h2>マーケティング的示唆</h2>
+    <div class="conclusion-box">
+      <div class="conclusion-card">
+        <h3>過密エリア（レッドオーシャン）</h3>
+        <p>
+          マップの<strong style="color:#ef4444;">右下（ソフト × 刺激/新食感）</strong>が最も過密。<br><br>
+          各メーカーが競って新食感グミを投入しており、差別化が困難になっている。
+        </p>
+        <p class="big-text" style="color:#ef4444;">→ 参入障壁は低いが埋没リスク大</p>
+      </div>
+      <div class="conclusion-card">
+        <h3 class="opp">空白地帯（ブルーオーシャン）</h3>
+        <p>
+          <strong style="color:#2cb67d;">左上（ハード × 果汁/ナチュラル）</strong>は比較的空白。<br><br>
+          「噛み応えがあるのに果汁感がしっかりある」商品は少なく、新商品開発の余地がある。
+        </p>
+        <p class="big-text" style="color:#2cb67d;">→ 差別化ポジションとして有望</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<div class="page-indicator"><span id="current">1</span> / <span id="total">8</span></div>
+<div class="nav">
+  <button id="prev" onclick="navigate(-1)" disabled>&#9664;</button>
+  <button id="next" onclick="navigate(1)">&#9654;</button>
+</div>
+
+<script>
+  let current = 1;
+  const total = document.querySelectorAll('.slide').length;
+  document.getElementById('total').textContent = total;
+
+  function navigate(dir) {
+    const next = current + dir;
+    if (next < 1 || next > total) return;
+    document.querySelector('.slide.active').classList.remove('active');
+    current = next;
+    const slide = document.querySelector(`[data-slide="${current}"]`);
+    slide.classList.add('active');
+    document.getElementById('current').textContent = current;
+    document.getElementById('prev').disabled = current === 1;
+    document.getElementById('next').disabled = current === total;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault();
+      navigate(1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      navigate(-1);
+    }
+  });
+</script>
+</body>
+</html>

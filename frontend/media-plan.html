@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メディアプラン計算ツール</title>
+    <link rel="stylesheet" href="media-plan.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <h1>メディアプラン計算ツール</h1>
+            <p class="subtitle">ターゲット設定から費用・リーチを自動算出</p>
+        </header>
+
+        <main class="main-content">
+            <div class="mode-toggle">
+                <button id="normalMode" class="mode-btn active">通常計算</button>
+                <button id="reverseMode" class="mode-btn">予算逆算</button>
+                <button id="adCostMode" class="mode-btn">広告費見積</button>
+            </div>
+
+
+            <form id="calculatorForm" class="calculator-form">
+                <div class="form-section">
+                    <h3>ターゲット設定</h3>
+                    <div class="form-row">
+                        <div class="form-group target-input-group">
+                            <label for="targetDescription">ターゲット（自由記述）</label>
+                            <div class="target-input-wrapper">
+                                <input type="text" id="targetDescription" placeholder="例: 会食が多い40-50代男性、更年期女性、子育て中の30代ママ" required>
+                                <button type="button" id="estimateBtn" class="estimate-btn form-group-normal-reverse">AI推定</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group form-group-normal-reverse">
+                            <label for="targetPopulation">推定人口（人）</label>
+                            <input type="number" id="targetPopulation" placeholder="AI推定ボタンで自動入力" required>
+                        </div>
+                        <div class="form-group form-group-normal-reverse">
+                            <label for="media">媒体</label>
+                            <select id="media" required>
+                                <option value="">選択してください</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-group-adcost" style="display: none;">
+                            <label for="mediaAdCost">媒体（未選択＝全媒体で試算）</label>
+                            <select id="mediaAdCost">
+                                <option value="">全媒体で試算</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="estimateResult" class="estimate-result" style="display: none;">
+                        <p class="estimate-reasoning"></p>
+                        <p class="estimate-confidence"></p>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>配信設定</h3>
+                    <div class="form-row">
+                        <div class="form-group normal-only adcost-only">
+                            <label for="reachRate">リーチ率 (%)</label>
+                            <input type="number" id="reachRate" min="1" max="100" value="50" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="frequency">フリークエンシー</label>
+                            <input type="number" id="frequency" min="1" max="20" value="2" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cpm">CPM (円)</label>
+                            <input type="number" id="cpm" min="1" placeholder="自動設定">
+                        </div>
+                        <div class="form-group reverse-only" style="display: none;">
+                            <label for="budget">予算 (円)</label>
+                            <input type="number" id="budget" min="1000" placeholder="1,000,000">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row form-group-normal-reverse">
+                    <button type="submit" id="calculateBtn" class="calculate-btn">計算する</button>
+                </div>
+                <div class="form-row form-group-adcost" style="display: none;">
+                    <button type="button" id="estimateAdCostBtn" class="calculate-btn">広告費を見積る</button>
+                </div>
+            </form>
+
+            <div id="adCostResults" class="results-section adcost-results" style="display: none;">
+                <h3>広告費見積結果</h3>
+                <p id="adCostSummary" class="adcost-summary"></p>
+                <p class="adcost-reasoning"><strong>推定根拠:</strong> <span id="adCostReasoning"></span></p>
+                <div class="adcost-table-wrap">
+                    <table id="adCostTable" class="adcost-table">
+                        <thead><tr><th>媒体</th><th>想定費用（円）</th><th>リーチ人数</th><th>インプレッション</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="results" class="results-section" style="display: none;">
+                <h3>計算結果</h3>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <span class="result-label">ターゲット人口</span>
+                        <span id="targetPopulation" class="result-value">-</span>
+                        <span class="result-unit">人</span>
+                    </div>
+                    <div class="result-card normal-result">
+                        <span class="result-label">リーチ人数</span>
+                        <span id="reachCount" class="result-value">-</span>
+                        <span class="result-unit">人</span>
+                    </div>
+                    <div class="result-card reverse-result" style="display: none;">
+                        <span class="result-label">最大リーチ人数</span>
+                        <span id="maxReach" class="result-value">-</span>
+                        <span class="result-unit">人</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="result-label">総インプレッション</span>
+                        <span id="totalImpressions" class="result-value">-</span>
+                        <span class="result-unit">imp</span>
+                    </div>
+                    <div class="result-card normal-result">
+                        <span class="result-label">想定費用</span>
+                        <span id="estimatedCost" class="result-value highlight">-</span>
+                        <span class="result-unit">円</span>
+                    </div>
+                    <div class="result-card reverse-result" style="display: none;">
+                        <span class="result-label">達成可能リーチ率</span>
+                        <span id="reachRateAchievable" class="result-value highlight">-</span>
+                        <span class="result-unit">%</span>
+                    </div>
+                </div>
+                <p class="cpm-note">使用CPM: <span id="cpmUsed">-</span>円</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <a href="/" class="back-link">← チャットに戻る</a>
+        </footer>
+    </div>
+
+    <script src="media-plan.js"></script>
+</body>
+</html>

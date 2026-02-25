@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日清 メディアプラン比較</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+    background: #f5f0ec;
+    padding: 40px 20px;
+    color: #333;
+  }
+  .container {
+    display: flex;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: center;
+  }
+  .card {
+    background: #fff;
+    width: 520px;
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .card-header {
+    background: #4a3028;
+    color: #fff;
+    text-align: center;
+    padding: 24px 20px;
+  }
+  .card-header .plan-label {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+  .card-header .plan-subtitle {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6;
+    opacity: 0.95;
+  }
+  .card-body {
+    padding: 28px 30px 32px;
+  }
+  .metrics {
+    margin-bottom: 24px;
+    line-height: 1.9;
+  }
+  .metrics .label {
+    font-weight: 700;
+    color: #4a3028;
+  }
+  .metrics p {
+    font-size: 13.5px;
+    margin-left: 4px;
+  }
+  .metrics .diamond {
+    color: #4a3028;
+    font-weight: 700;
+  }
+  .eval-section {
+    margin-bottom: 24px;
+  }
+  .eval-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 6px;
+  }
+  .eval-row:last-child {
+    margin-bottom: 0;
+  }
+  .eval-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    padding: 6px 16px;
+    min-width: 130px;
+    text-align: center;
+  }
+  .eval-label.red { background: #c94a4a; }
+  .eval-label.pink { background: #d4736c; }
+  .eval-label.salmon { background: #e0978f; }
+  .eval-rating {
+    flex: 1;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #4a3028;
+  }
+  .budget-section {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin: 24px 0;
+    padding: 12px 0;
+    border-top: 2px solid #4a3028;
+    border-bottom: 2px solid #4a3028;
+  }
+  .budget-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+  }
+  .budget-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: #4a3028;
+    letter-spacing: 1px;
+  }
+  .budget-sub {
+    font-size: 12px;
+    color: #888;
+    margin-top: 2px;
+  }
+  .merits {
+    margin-top: 20px;
+  }
+  .merits-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #4a3028;
+    margin-bottom: 10px;
+  }
+  .merits ul {
+    list-style: none;
+    padding: 0;
+  }
+  .merits li {
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 6px;
+    padding-left: 14px;
+    position: relative;
+    color: #444;
+  }
+  .merits li::before {
+    content: '・';
+    position: absolute;
+    left: 0;
+    color: #4a3028;
+    font-weight: 700;
+  }
+  .demerits {
+    margin-top: 16px;
+  }
+  .demerits-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #999;
+    margin-bottom: 10px;
+  }
+  .demerits li {
+    color: #888;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- プラン① ミドル多め -->
+  <div class="card">
+    <div class="card-header">
+      <div class="plan-label">PLAN A</div>
+      <div class="plan-subtitle">ミドルKOL多数起用で<br>IMP・リーチ効率を最大化したプラン</div>
+    </div>
+    <div class="card-body">
+
+      <div class="metrics">
+        <p><span class="diamond">◆</span><span class="label">想定起用人数</span></p>
+        <p>　Paid KOL 約44名（全員Middle層）<br>　+ ギフティング 約81名（27名×3Phase）</p>
+        <p style="margin-top:8px;"><span class="diamond">◆</span><span class="label">想定IMP数</span>　約46,647,000</p>
+        <p><span class="diamond">◆</span><span class="label">想定リーチ数</span>　約12,387,000</p>
+      </div>
+
+      <div class="eval-section">
+        <div class="eval-row">
+          <div class="eval-label red">認知獲得</div>
+          <div class="eval-rating">◎</div>
+        </div>
+        <div class="eval-row">
+          <div class="eval-label pink">話題化醸成</div>
+          <div class="eval-rating">○</div>
+        </div>
+        <div class="eval-row">
+          <div class="eval-label salmon">コスト効率</div>
+          <div class="eval-rating">◎</div>
+        </div>
+      </div>
+
+      <div class="budget-section">
+        <div>
+          <div class="budget-label">予算</div>
+        </div>
+        <div>
+          <div class="budget-value">5,000万円</div>
+          <div class="budget-sub">（うち広告配信費 2,000万円 / 40%）</div>
+        </div>
+      </div>
+
+      <div class="merits">
+        <div class="merits-title">＜メリット＞</div>
+        <ul>
+          <li>IMP約4,665万・リーチ約1,239万と数値効率が高い：広告配信比率40%で最大限のリーチを確保。</li>
+          <li>Middle KOL多数起用で多角的な露出：多様なクリエイターが各自の切り口で発信するため、TL上での接触回数が増加。</li>
+          <li>UGC誘発力が高い：Middle層のフォロワーは共感ベースで行動しやすく、オーガニック投稿の連鎖が期待できる。</li>
+          <li>Phase2の広告にドラマ訴求を追加：シーン訴求+ドラマの2軸で広告を回し、リーチの厚みを確保。</li>
+        </ul>
+      </div>
+
+      <div class="merits demerits">
+        <div class="merits-title demerits-title">＜デメリット＞</div>
+        <ul>
+          <li>単発のインパクトに欠ける：Mega不在のため「バズった」と一目で分かる瞬間的な話題性は弱い。</li>
+          <li>広告配信費が全体の40%を占め、KOL施策への配分がやや圧迫される。</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- プラン② メガ起用あり -->
+  <div class="card">
+    <div class="card-header">
+      <div class="plan-label">PLAN B</div>
+      <div class="plan-subtitle">Mega KOL起用で<br>話題性・インパクトを重視したプラン</div>
+    </div>
+    <div class="card-body">
+
+      <div class="metrics">
+        <p><span class="diamond">◆</span><span class="label">想定起用人数</span></p>
+        <p>　Mega 1名（100万FW級）+ Paid Middle 約34名<br>　+ ギフティング 約81名（27名×3Phase）</p>
+        <p style="margin-top:8px;"><span class="diamond">◆</span><span class="label">想定IMP数</span>　約37,999,000</p>
+        <p><span class="diamond">◆</span><span class="label">想定リーチ数</span>　約9,707,000</p>
+      </div>
+
+      <div class="eval-section">
+        <div class="eval-row">
+          <div class="eval-label red">認知獲得</div>
+          <div class="eval-rating">○</div>
+        </div>
+        <div class="eval-row">
+          <div class="eval-label pink">話題化醸成</div>
+          <div class="eval-rating">◎</div>
+        </div>
+        <div class="eval-row">
+          <div class="eval-label salmon">コスト効率</div>
+          <div class="eval-rating">○</div>
+        </div>
+      </div>
+
+      <div class="budget-section">
+        <div>
+          <div class="budget-label">予算</div>
+        </div>
+        <div>
+          <div class="budget-value">5,000万円</div>
+          <div class="budget-sub">（うち広告配信費 1,600万円 / 32%）</div>
+        </div>
+      </div>
+
+      <div class="merits">
+        <div class="merits-title">＜メリット＞</div>
+        <ul>
+          <li>Mega KOL（100万FW級）の起用でPhase2に強力な話題化ポイントを創出：トレンド入りやメディア波及が期待できる。</li>
+          <li>広告費を抑えつつ（32%）、Megaの自然リーチで認知を補完：インフルエンサー費に予算を集中させた攻めの構成。</li>
+          <li>同予算5,000万円内でKOL施策に厚く配分：広告費を抑えた分、クリエイター投資を最大化。</li>
+          <li>Phase2でMega×2投稿 + Middle×4投稿の二段構えで、シーン訴求の厚みを確保。</li>
+        </ul>
+      </div>
+
+      <div class="merits demerits">
+        <div class="merits-title demerits-title">＜デメリット＞</div>
+        <ul>
+          <li>IMP・リーチの数値効率はプラン①に劣る（IMP△19%、リーチ△22%）。</li>
+          <li>Megaへの依存度が高く、投稿パフォーマンスのブレ幅が大きい。</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

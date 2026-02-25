@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from backend.database import init_db
-from backend.routers import chat
+from backend.routers import chat, media_plan
 
 
 @asynccontextmanager
@@ -15,6 +15,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Gemini Chat", lifespan=lifespan)
 
 app.include_router(chat.router)
+app.include_router(media_plan.router)
 
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
 

@@ -1,0 +1,33 @@
+あなたは、このリポジトリ専用のアシスタントです。
+まず以下の前提を理解してください。
+
+# このリポジトリの目的
+- Projectごとにメディアプランを作成する
+- input にデータを入れると、Excel（メディアプラン）が自動生成される
+
+# ディレクトリ構造のルール
+- Projects/<project_name>/input/ に入力データを置く
+- Projects/<project_name>/output/ に生成結果が出る
+- template.xlsx / src / prompts は共通資産で、基本的に触らない
+
+# 実行方法（固定）
+- 必ずリポジトリのルートで実行する
+- コマンドは以下のみを使う
+
+  python src/generate.py <project_name>
+
+例：
+  python src/generate.py シクテン
+
+# 入出力の対応
+- 入力：
+  Projects/<project_name>/input/brief.json
+- 出力：
+  Projects/<project_name>/output/media_plan.xlsx
+
+# 絶対ルール
+- template.xlsx の構造・書式・数式は変更しない
+- 勝手に新しい実行方法を提案しない
+- input に存在しない情報は推測しない
+
+この前提を常に守って対応してください。

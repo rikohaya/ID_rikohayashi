@@ -1,6 +1,7 @@
 import aiosqlite
 from datetime import datetime
 from pathlib import Path
+from typing import Optional, List
 from backend.config import settings
 
 
@@ -57,7 +58,7 @@ async def create_conversation(title: str = "新しいチャット") -> dict:
         await db.close()
 
 
-async def get_conversations() -> list[dict]:
+async def get_conversations() -> List[dict]:
     db = await get_db()
     try:
         cursor = await db.execute(
@@ -69,7 +70,7 @@ async def get_conversations() -> list[dict]:
         await db.close()
 
 
-async def get_conversation(conversation_id: int) -> dict | None:
+async def get_conversation(conversation_id: int) -> Optional[dict]:
     db = await get_db()
     try:
         cursor = await db.execute(
@@ -143,7 +144,7 @@ async def update_conversation_title(conversation_id: int, title: str) -> bool:
         await db.close()
 
 
-async def get_conversation_messages(conversation_id: int) -> list[dict]:
+async def get_conversation_messages(conversation_id: int) -> List[dict]:
     db = await get_db()
     try:
         cursor = await db.execute(

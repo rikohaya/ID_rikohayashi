@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>シャンプー新ブランドローンチ 競合分析レポート</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
+    background: #0a0a0f;
+    color: #333;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+  .slide-container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 52px 80px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: fadeIn 0.35s ease;
+  }
+
+  .slide.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== Slide 1: Title ===== */
+  .slide-title {
+    background: linear-gradient(135deg, #12101e 0%, #1e1428 50%, #2a1535 100%);
+    color: #fff;
+    text-align: center;
+  }
+  .slide-title .eyebrow {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #c9a878;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .slide-title h1 {
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    line-height: 1.25;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, #f0e6d3, #ffffff, #e8d4b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .slide-title .accent-line {
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, #c9a878, #e8c99a, #c9a878);
+    margin: 20px auto;
+    border-radius: 2px;
+  }
+  .slide-title .meta {
+    font-size: 0.88rem;
+    color: #6b6480;
+    margin-top: 32px;
+    letter-spacing: 0.05em;
+  }
+  .slide-title .brand-list {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .slide-title .brand-tag {
+    background: rgba(201,168,120,0.12);
+    border: 1px solid rgba(201,168,120,0.3);
+    color: #c9a878;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  /* ===== Common Slide Styles ===== */
+  .slide-content {
+    background: #ffffff;
+    padding: 48px 80px;
+    align-items: flex-start;
+  }
+  .slide-content h2 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #12101e;
+    margin-bottom: 28px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #c9a878;
+    width: 100%;
+  }
+  .slide-content h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #2a1535;
+    margin-bottom: 12px;
+    margin-top: 6px;
+  }
+  .slide-content ul {
+    list-style: none;
+    width: 100%;
+  }
+  .slide-content ul li {
+    font-size: 1.05rem;
+    line-height: 1.85;
+    padding: 6px 0 6px 26px;
+    position: relative;
+    color: #444;
+  }
+  .slide-content ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 16px;
+    width: 9px;
+    height: 9px;
+    background: #c9a878;
+    border-radius: 50%;
+  }
+  .slide-content .highlight {
+    color: #a0731e;
+    font-weight: 700;
+  }
+  .slide-content .tag {
+    display: inline-block;
+    background: #fdf3e3;
+    color: #8a5c15;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9em;
+  }
+
+  /* ===== Slide 2: Overview Table ===== */
+  .overview-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    margin-top: 4px;
+  }
+  .overview-table th {
+    background: #2a1535;
+    color: #c9a878;
+    padding: 12px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.88rem;
+    letter-spacing: 0.04em;
+  }
+  .overview-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+    line-height: 1.5;
+  }
+  .overview-table tr:nth-child(even) td { background: #fafaf8; }
+  .overview-table tr:hover td { background: #fdf3e3; transition: background 0.15s; }
+  .overview-table .brand-name {
+    font-weight: 700;
+    color: #2a1535;
+  }
+  .overview-table .badge {
+    display: inline-block;
+    background: #2a1535;
+    color: #c9a878;
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-left: 6px;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+
+  /* ===== Brand Detail Slides ===== */
+  .brand-slide {
+    background: #faf8f5;
+    padding: 44px 72px;
+    align-items: flex-start;
+  }
+  .brand-slide h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #12101e;
+    margin-bottom: 22px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #c9a878;
+    width: 100%;
+  }
+  .brand-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    width: 100%;
+    flex: 1;
+  }
+  .brand-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 22px 24px;
+    border: 1px solid #ede8df;
+  }
+  .brand-card h3 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #c9a878;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #f0e8d8;
+    padding-bottom: 8px;
+  }
+  .brand-card p, .brand-card li {
+    font-size: 0.95rem;
+    color: #444;
+    line-height: 1.75;
+  }
+  .brand-card ul { list-style: none; padding: 0; }
+  .brand-card ul li {
+    padding: 4px 0 4px 18px;
+    position: relative;
+  }
+  .brand-card ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: #c9a878;
+    font-weight: 700;
+    font-size: 1.1em;
+  }
+  .brand-card .kpi {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #2a1535;
+    display: block;
+    margin-top: 4px;
+  }
+  .brand-card .kpi-label {
+    font-size: 0.8rem;
+    color: #888;
+  }
+  .brand-card.result {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #2a1535 0%, #1e1428 100%);
+    border: none;
+  }
+  .brand-card.result h3 { color: #c9a878; border-bottom-color: rgba(201,168,120,0.25); }
+  .brand-card.result .kpi { color: #fff; }
+  .brand-card.result .kpi-label { color: #998aaa; }
+  .brand-card.result p, .brand-card.result li { color: #ccc; }
+  .brand-card.result ul li::before { color: #c9a878; }
+
+  /* ===== Success Ranking Slide ===== */
+  .ranking-slide {
+    background: #ffffff;
+    padding: 48px 80px;
+    align-items: flex-start;
+  }
+  .ranking-slide h2 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #12101e;
+    margin-bottom: 26px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #c9a878;
+    width: 100%;
+  }
+  .ranking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+  }
+  .ranking-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    background: #faf8f5;
+    border-radius: 10px;
+    padding: 18px 22px;
+    border: 1px solid #ede8df;
+  }
+  .ranking-item.gold { border-left: 5px solid #c9a878; background: #fdf9f2; }
+  .ranking-item.silver { border-left: 5px solid #a8a8b3; background: #f9f9fb; }
+  .ranking-item.bronze { border-left: 5px solid #c9856a; background: #fdf8f6; }
+  .ranking-item.pending { border-left: 5px solid #88b0c9; background: #f6fafd; }
+  .ranking-item.weak { border-left: 5px solid #aaa; background: #f7f7f7; }
+  .rank-num {
+    font-size: 2rem;
+    font-weight: 900;
+    min-width: 48px;
+    text-align: center;
+    line-height: 1;
+    padding-top: 2px;
+  }
+  .gold .rank-num { color: #b8893a; }
+  .silver .rank-num { color: #7a7a8a; }
+  .bronze .rank-num { color: #b06545; }
+  .pending .rank-num, .weak .rank-num { color: #aaa; font-size: 1.3rem; padding-top: 6px; }
+  .rank-body h3 { font-size: 1.1rem; font-weight: 700; color: #12101e; margin-bottom: 4px; }
+  .rank-body p { font-size: 0.92rem; color: #555; line-height: 1.65; }
+
+  /* ===== Recommendation Slide ===== */
+  .rec-slide {
+    background: linear-gradient(135deg, #12101e 0%, #1e1428 100%);
+    padding: 48px 72px;
+    align-items: flex-start;
+    color: #fff;
+  }
+  .rec-slide h2 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 26px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #c9a878;
+    width: 100%;
+  }
+  .rec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    width: 100%;
+    flex: 1;
+  }
+  .rec-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,120,0.2);
+    border-radius: 12px;
+    padding: 26px 28px;
+  }
+  .rec-card .rec-rank {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: #c9a878;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .rec-card h3 { font-size: 1.4rem; font-weight: 900; color: #fff; margin-bottom: 14px; }
+  .rec-card p { font-size: 0.92rem; color: #bbb; line-height: 1.75; }
+  .rec-card ul { list-style: none; margin-top: 10px; }
+  .rec-card ul li {
+    font-size: 0.92rem;
+    color: #bbb;
+    line-height: 1.75;
+    padding: 3px 0 3px 18px;
+    position: relative;
+  }
+  .rec-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: #c9a878;
+    font-size: 0.85em;
+  }
+  .rec-card .reason-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .rec-card .reason {
+    background: rgba(201,168,120,0.08);
+    border-left: 3px solid #c9a878;
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.9rem;
+    color: #ddd;
+    line-height: 1.6;
+  }
+
+  /* ===== Checklist Slide ===== */
+  .check-slide {
+    background: #ffffff;
+    padding: 48px 80px;
+    align-items: flex-start;
+  }
+  .check-slide h2 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #12101e;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #c9a878;
+    width: 100%;
+  }
+  .check-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    width: 100%;
+  }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: #faf8f5;
+    border-radius: 8px;
+    padding: 14px 18px;
+    border: 1px solid #ede8df;
+  }
+  .check-num {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #c9a878;
+    min-width: 36px;
+    text-align: center;
+    line-height: 1.1;
+  }
+  .check-body h3 { font-size: 0.95rem; font-weight: 700; color: #12101e; margin-bottom: 3px; }
+  .check-body p { font-size: 0.85rem; color: #666; line-height: 1.6; }
+  .check-item.wide {
+    grid-column: 1 / -1;
+    background: #fdf9f2;
+    border-color: #c9a878;
+  }
+
+  /* ===== Market Context Slide ===== */
+  .market-slide {
+    background: linear-gradient(135deg, #12101e 0%, #1e1428 100%);
+    padding: 48px 80px;
+    align-items: flex-start;
+    color: #fff;
+  }
+  .market-slide h2 {
+    font-size: 1.85rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 28px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #c9a878;
+    width: 100%;
+  }
+  .market-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    width: 100%;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(201,168,120,0.2);
+    border-radius: 10px;
+    padding: 20px 16px;
+    text-align: center;
+  }
+  .stat-card .stat-val {
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: #c9a878;
+    display: block;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .stat-card .stat-desc {
+    font-size: 0.8rem;
+    color: #999;
+    line-height: 1.5;
+  }
+  .market-ref {
+    background: rgba(201,168,120,0.08);
+    border: 1px solid rgba(201,168,120,0.2);
+    border-radius: 10px;
+    padding: 18px 24px;
+    width: 100%;
+  }
+  .market-ref .ref-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #c9a878;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .market-ref p {
+    font-size: 0.95rem;
+    color: #ccc;
+    line-height: 1.75;
+  }
+  .market-ref strong { color: #fff; }
+
+  /* ===== Navigation ===== */
+  .nav {
+    position: fixed;
+    bottom: 28px;
+    right: 36px;
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+  }
+  .nav button {
+    width: 46px;
+    height: 46px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(18,16,30,0.8);
+    color: #c9a878;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(201,168,120,0.25);
+  }
+  .nav button:hover { background: #c9a878; color: #12101e; }
+  .nav button:disabled { opacity: 0.3; cursor: default; }
+  .nav button:disabled:hover { background: rgba(18,16,30,0.8); color: #c9a878; }
+
+  .page-indicator {
+    position: fixed;
+    bottom: 36px;
+    left: 36px;
+    font-size: 0.82rem;
+    color: #888;
+    z-index: 100;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 1024px) {
+    .slide { padding: 32px 40px; }
+    .slide-title h1 { font-size: 2rem; }
+    .brand-grid, .rec-grid, .check-grid { grid-template-columns: 1fr; }
+    .market-stats { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="slide-container">
+
+  <!-- Slide 1: Title -->
+  <div class="slide slide-title active" data-slide="1">
+    <p class="eyebrow">Competitive Analysis 2026</p>
+    <h1>シャンプー新ブランドローンチ<br>競合分析レポート</h1>
+    <div class="accent-line"></div>
+    <div class="brand-list">
+      <span class="brand-tag">melt</span>
+      <span class="brand-tag">theanswer</span>
+      <span class="brand-tag">strain</span>
+      <span class="brand-tag">プリュスおー</span>
+      <span class="brand-tag">アンレーベル</span>
+      <span class="brand-tag">コンクレット</span>
+    </div>
+    <p class="meta">調査日：2026年2月25日　｜　対象：高プレミアムゾーン（¥1,320〜¥1,980）</p>
+  </div>
+
+  <!-- Slide 2: Brand Overview -->
+  <div class="slide slide-content" data-slide="2">
+    <h2>調査対象ブランド概要</h2>
+    <table class="overview-table">
+      <thead>
+        <tr>
+          <th>ブランド</th>
+          <th>運営</th>
+          <th>ローンチ</th>
+          <th>価格帯</th>
+          <th>成果指標</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="brand-name">melt</span><span class="badge">★ No.1</span></td>
+          <td>花王</td>
+          <td>2024年4月</td>
+          <td>¥1,320〜1,760</td>
+          <td>累計出荷 <strong>700万本</strong>（2年）</td>
+        </tr>
+        <tr>
+          <td><span class="brand-name">theanswer</span><span class="badge">★ No.2</span></td>
+          <td>花王</td>
+          <td>2024年11月</td>
+          <td>¥1,320〜1,760</td>
+          <td>150万本（10ヶ月）・計画比2倍</td>
+        </tr>
+        <tr>
+          <td><span class="brand-name">strain（Straine）</span></td>
+          <td>Aiロボティクス</td>
+          <td>2025年7月</td>
+          <td>¥1,540〜1,980</td>
+          <td>楽天6部門1位（初日）</td>
+        </tr>
+        <tr>
+          <td><span class="brand-name">プリュスおー</span></td>
+          <td>—</td>
+          <td>既存ブランド</td>
+          <td>¥1,500〜1,800</td>
+          <td>累計 800万本以上</td>
+        </tr>
+        <tr>
+          <td><span class="brand-name">アンレーベル</span></td>
+          <td>AINZ &amp; TULPE</td>
+          <td>既存ブランド</td>
+          <td>¥1,650</td>
+          <td>データ限定的</td>
+        </tr>
+        <tr>
+          <td><span class="brand-name">コンクレット（CONCRED）</span></td>
+          <td>マツキヨ</td>
+          <td>2025年4月</td>
+          <td>¥1,980</td>
+          <td>@cosme上半期3位（2025）</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Slide 3: melt -->
+  <div class="slide brand-slide" data-slide="3">
+    <h2>melt（メルト）― 最成功事例</h2>
+    <div class="brand-grid">
+      <div class="brand-card">
+        <h3>ポジショニング</h3>
+        <ul>
+          <li>「休息美容」：バスタイムをセルフケアの時間へ</li>
+          <li>ターゲット：セルフケア意識の高い20-30代女性</li>
+          <li>香り・泡・テクスチャー・音の<strong>五感体験</strong>を設計</li>
+        </ul>
+      </div>
+      <div class="brand-card">
+        <h3>マーケティング戦略</h3>
+        <ul>
+          <li><strong>TikTok最重視</strong>：開発フェーズからクリエイターと協業</li>
+          <li>成分系インフルエンサー → 技術的情報提供</li>
+          <li>クリエイター系 → 体験・デザイン訴求</li>
+          <li>ポップアップ原宿：3日で<strong>5,000人</strong>来場</li>
+          <li>ローンチ後2年間 SNS継続バズを維持</li>
+        </ul>
+      </div>
+      <div class="brand-card result">
+        <h3>結果</h3>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-top:4px;">
+          <div>
+            <span class="kpi-label">発売初動</span>
+            <span class="kpi">計画比9倍</span>
+          </div>
+          <div>
+            <span class="kpi-label">累計出荷（2年）</span>
+            <span class="kpi">700万本+</span>
+          </div>
+          <div>
+            <span class="kpi-label">新シリーズ効果</span>
+            <span class="kpi">全体2倍</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: theanswer -->
+  <div class="slide brand-slide" data-slide="4">
+    <h2>theanswer（ジアンサー）― 技術×感情の二段戦略</h2>
+    <div class="brand-grid">
+      <div class="brand-card">
+        <h3>ポジショニング</h3>
+        <ul>
+          <li>「ヘアケア迷子」（約70%の消費者）向けの「答え」</li>
+          <li>花王100年の研究を訴求する<strong>技術信頼型</strong>ブランド</li>
+          <li>ターゲット：自立した女性 30-40代</li>
+          <li>核心技術：スーパーラメラテクノロジー（世界初・12倍脂質濃度）</li>
+        </ul>
+      </div>
+      <div class="brand-card">
+        <h3>マーケティング戦略</h3>
+        <ul>
+          <li><strong>Phase 1</strong>：成分系YouTuberへリーチ → 技術信頼の醸成</li>
+          <li><strong>Phase 2</strong>：感情訴求へシフト（「迷子からの解放」）</li>
+          <li>PGC → UGCの二段コミュニケーション</li>
+          <li>感情ニーズ戦略 × アジャイル組織の実行力</li>
+        </ul>
+      </div>
+      <div class="brand-card result">
+        <h3>結果</h3>
+        <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:16px; margin-top:4px;">
+          <div>
+            <span class="kpi-label">売上計画比</span>
+            <span class="kpi">2倍</span>
+          </div>
+          <div>
+            <span class="kpi-label">@cosme 2025上半期</span>
+            <span class="kpi">総合GP</span>
+          </div>
+          <div>
+            <span class="kpi-label">日経トレンディ</span>
+            <span class="kpi">7位</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: strain + CONCRED -->
+  <div class="slide brand-slide" data-slide="5">
+    <h2>strain（ストレイン）＆ コンクレット（CONCRED）― 2025年新鋭</h2>
+    <div class="brand-grid">
+      <div class="brand-card">
+        <h3>strain（2025年7月）</h3>
+        <ul>
+          <li>「まっすぐ髪難民」向け。世界初ストレートシルクケア成分</li>
+          <li><strong>山下智久</strong>をブランドアンバサダーに起用</li>
+          <li>渋谷駅シールはがし広告：<strong>9万点</strong>配布</li>
+          <li>X「#即攻ストレート計画」キャンペーン</li>
+          <li>韓国風パッケージで若年層訴求</li>
+        </ul>
+      </div>
+      <div class="brand-card">
+        <h3>コンクレット（2025年4月）</h3>
+        <ul>
+          <li>「韓国コスメへの対抗」という明確な日本発ナラティブ</li>
+          <li>アミノ酸を損傷量以上に配合する<strong>証拠ベース処方</strong></li>
+          <li>マツキヨグループ全店（3,313億円規模）の強力流通</li>
+          <li>プレミアム価格 ¥1,980 で品質を示す</li>
+          <li>@cosme 2025上半期 シャンプー部門<strong>3位</strong></li>
+        </ul>
+      </div>
+      <div class="brand-card result" style="grid-column:1/-1;">
+        <h3>評価：どちらも初動好調 ─ ただし長期評価は不可</h3>
+        <p>strainは楽天初日6部門1位・発売即売り切れ続出。CONCREDも発売直後に記録的売上。<br>
+        しかし両ブランドともローンチから1年未満のため、<strong>継続的な成長の証明はこれから。</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Plus eau + Unlabel -->
+  <div class="slide brand-slide" data-slide="6">
+    <h2>プリュスおー ＆ アンレーベル ― 既存ポジションブランド</h2>
+    <div class="brand-grid">
+      <div class="brand-card">
+        <h3>プリュスおー（Plus eau）</h3>
+        <ul>
+          <li>サロン品質をドラッグストアで提供する定番路線</li>
+          <li>細毛〜ダメージまで幅広い髪悩みをカバー</li>
+          <li>SNSインフルエンサー・YouTuberによる口コミ拡散</li>
+          <li>プロ美容師の推薦で信頼性構築</li>
+          <li>マルチチャネル展開（ドラッグストア＋ロフト＋ドンキ等）</li>
+          <li>@cosme 2024 シャンプー部門<strong>2位</strong></li>
+          <li>累計 800万〜1,500万本（ブランドとして確立済み）</li>
+        </ul>
+      </div>
+      <div class="brand-card">
+        <h3>アンレーベル（Unlabel）</h3>
+        <ul>
+          <li>超高圧浸透テクノロジー訴求の濃縮美容液シャンプー</li>
+          <li>AINZ &amp; TULPE 専用流通（限定チャネル）</li>
+          <li>試供品（132円）でトライアルハードルを低下</li>
+          <li>LIPSや@cosmeでの口コミは好評</li>
+          <li style="color:#c9856a;"><strong>課題：限定流通のため認知度・拡大が制約される</strong></li>
+        </ul>
+      </div>
+      <div class="brand-card result" style="grid-column:1/-1;">
+        <h3>対比：広域展開 vs 限定流通</h3>
+        <p>プリュスおーの成功要因は<strong>チャネルの広さとUGC継続性</strong>にある。<br>
+        アンレーベルは品質評価が高くても、AINZ&amp;TULPE限定では認知の天井が低い。<strong>広域流通への移行が成長の鍵</strong>となる。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Success Ranking -->
+  <div class="slide ranking-slide" data-slide="7">
+    <h2>成長成功判定</h2>
+    <div class="ranking-list">
+      <div class="ranking-item gold">
+        <div class="rank-num">1</div>
+        <div class="rank-body">
+          <h3>melt（メルト）</h3>
+          <p>ローンチから2年で累計700万本。SNS継続バズを2年維持。新シリーズ発売のたびに全体売上2倍。<strong>継続成長の仕組みが最も確立されている。</strong></p>
+        </div>
+      </div>
+      <div class="ranking-item silver">
+        <div class="rank-num">2</div>
+        <div class="rank-body">
+          <h3>theanswer（ジアンサー）</h3>
+          <p>10ヶ月で150万本・計画比2倍。@cosme総合グランプリ（シャンプー初）という業界最高評価を獲得。ローンチ後の伸びも堅調。</p>
+        </div>
+      </div>
+      <div class="ranking-item bronze">
+        <div class="rank-num">3</div>
+        <div class="rank-body">
+          <h3>プリュスおー</h3>
+          <p>800万本以上の安定成長。@cosme上位常連。複数ライン展開で成長維持。新ブランドではないが、<strong>持続的成長モデルとして参考価値が高い。</strong></p>
+        </div>
+      </div>
+      <div class="ranking-item pending">
+        <div class="rank-num">⏳</div>
+        <div class="rank-body">
+          <h3>コンクレット・strain ― 判定保留</h3>
+          <p>初動は好調（楽天1位・@cosme上位）だが、ローンチから1年未満。長期成長の評価はこれから。</p>
+        </div>
+      </div>
+      <div class="ranking-item weak">
+        <div class="rank-num">—</div>
+        <div class="rank-body">
+          <h3>アンレーベル ― 成長データ不足</h3>
+          <p>AINZ &amp; TULPE限定流通のため、認知度と拡大が限定的。広域展開なしでは全国規模での成長は困難。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 8: Recommendation -->
+  <div class="slide rec-slide" data-slide="8">
+    <h2>新商品ローンチへの推奨参考ブランド</h2>
+    <div class="rec-grid">
+      <div class="rec-card">
+        <div class="rec-rank">第1推奨</div>
+        <h3>melt をベースモデルに</h3>
+        <div class="reason-list">
+          <div class="reason">「休息美容」という感情的ベネフィットが機能訴求より先行 → 差別化に最も成功</div>
+          <div class="reason">TikTok主軸クリエイターマーケを<strong>開発段階から</strong>巻き込むモデル</div>
+          <div class="reason">新シリーズでトライアルユーザーをリピーターへ転換する設計</div>
+        </div>
+        <p style="margin-top:14px; font-size:0.85rem; color:#888;">学ぶ施策：初期は体験UGC生成 → 中期に成分系補強 → 長期は新ラインでリテンション</p>
+      </div>
+      <div class="rec-card">
+        <div class="rec-rank">第2推奨</div>
+        <h3>theanswer の二段構造を取り入れる</h3>
+        <div class="reason-list">
+          <div class="reason">「技術→感情」の二段階コミュニケーションが@cosme総合GPにつながった</div>
+          <div class="reason">「ヘアケア迷子」という<strong>明確なPAIN</strong>から出発した戦略設計</div>
+          <div class="reason">成分YouTuberによるPGCがローンチ前の信頼構築として機能</div>
+        </div>
+        <p style="margin-top:14px; font-size:0.85rem; color:#888;">学ぶ施策：ローンチ前に「テクノロジー先行PR」でコア層の信頼を醸成してから感情訴求へ</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 9: Checklist -->
+  <div class="slide check-slide" data-slide="9">
+    <h2>立ち上げ期チェックリスト ― 成功ブランドの共通要素</h2>
+    <div class="check-grid">
+      <div class="check-item">
+        <div class="check-num">01</div>
+        <div class="check-body">
+          <h3>コンセプト先行</h3>
+          <p>機能より感情を前面に。「休息美容」「ヘアケア迷子の答え」のように<strong>共感できる言葉</strong>でブランドを立てる</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">02</div>
+        <div class="check-body">
+          <h3>TikTok × Instagram の二重展開</h3>
+          <p>TikTokで体験バズを起こし、Instagramで世界観を確立。どちらか一方ではなく両輪で動かす</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">03</div>
+        <div class="check-body">
+          <h3>インフルエンサー分業制</h3>
+          <p><strong>成分系</strong>（信頼）＋<strong>ライフスタイル系</strong>（共感）の2タイプを使い分ける。どちらか一本に絞らない</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">04</div>
+        <div class="check-body">
+          <h3>ローンチ前サンプリング</h3>
+          <p>発売前に口コミの種を蒔く。ローンチ当日に@cosme・LIPSのレビューが揃っている状態を作る</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">05</div>
+        <div class="check-body">
+          <h3>@cosme レビュー獲得</h3>
+          <p>レビュー数の多さが検索時の信頼スコアに直結。ランキング入りが新規認知の起爆剤になる</p>
+        </div>
+      </div>
+      <div class="check-item">
+        <div class="check-num">06</div>
+        <div class="check-body">
+          <h3>価格帯：¥1,500〜¥1,980</h3>
+          <p>高プレミアムゾーンが2017→2023年で3倍に拡大。46.2%の消費者が¥1,500以上を許容</p>
+        </div>
+      </div>
+      <div class="check-item wide">
+        <div class="check-num">07</div>
+        <div class="check-body">
+          <h3>新シリーズ計画をローンチ前から設計する</h3>
+          <p>初期ラインとは別の用途・悩みで第2・第3のラインを用意し、トライアル購入者をリピーターへ転換する仕組みを最初から設計する。meltはスムース系追加で全体売上2倍を実現した。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 10: Market Context -->
+  <div class="slide market-slide" data-slide="10">
+    <h2>市場コンテキスト</h2>
+    <div class="market-stats">
+      <div class="stat-card">
+        <span class="stat-val">3×</span>
+        <span class="stat-desc">高プレミアム（¥1,400+）の<br>市場シェア拡大<br>2017 → 2023年</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">46.2%</span>
+        <span class="stat-desc">シャンプーに¥1,500以上を<br>支払う消費者の比率<br>（2025年時点）</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">8,370億</span>
+        <span class="stat-desc">ヘアケア市場規模（2024年）<br>前年比 +3.5%</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-val">2,500万本</span>
+        <span class="stat-desc">YOLU（I-ne）の累計販売数<br>2021年ローンチ・ナイトビューティー訴求</span>
+      </div>
+    </div>
+    <div class="market-ref">
+      <div class="ref-label">Key Takeaway</div>
+      <p>
+        高プレミアムゾーンへの消費者移行は構造的なトレンドであり、今後も継続が見込まれる。<br>
+        成功の鍵は<strong>感情的ポジショニングの明確化</strong>・<strong>TikTok起点のクリエイターエコシステム構築</strong>・
+        <strong>@cosmeレビュー獲得による信頼蓄積</strong>の3点に集約される。<br>
+        ベンチマークは <strong>melt（初動9倍・2年700万本）</strong> を第1目標とし、
+        <strong>theanswer（計画比2倍・総合GP）</strong> の技術訴求モデルを組み合わせる戦略が最も再現性が高い。
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<div class="page-indicator"><span id="current">1</span> / <span id="total">10</span></div>
+<div class="nav">
+  <button id="prev" onclick="navigate(-1)" disabled>&#9664;</button>
+  <button id="next" onclick="navigate(1)">&#9654;</button>
+</div>
+
+<script>
+  let current = 1;
+  const total = document.querySelectorAll('.slide').length;
+  document.getElementById('total').textContent = total;
+
+  function navigate(dir) {
+    const next = current + dir;
+    if (next < 1 || next > total) return;
+    document.querySelector('.slide.active').classList.remove('active');
+    current = next;
+    const slide = document.querySelector(`[data-slide="${current}"]`);
+    slide.classList.add('active');
+    document.getElementById('current').textContent = current;
+    document.getElementById('prev').disabled = current === 1;
+    document.getElementById('next').disabled = current === total;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault();
+      navigate(1);
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      navigate(-1);
+    }
+  });
+</script>
+</body>
+</html>

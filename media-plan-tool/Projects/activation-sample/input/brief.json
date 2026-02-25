@@ -1,0 +1,162 @@
+{
+  "project": {
+    "total_budget": 0,
+    "period": "3/23発売起点（発売期〜発売後2-3週間）",
+    "memo": "【要確認】総予算は画像に記載なし（0は仮値）\nクライアント: NISSIN\n目的A: シーンへの共感\n目的B: TikTokバズ\n★3/23 発売日\nフェーズ構成: Phase1（発売期の話題化）→ Phase2（発売序盤の盛り上げ）→ Phase3（継続的な話題化）\n備考: TVCM（仮）・コンビニ施策の記載あり（非デジタル施策、本プラン対象外の可能性あり。要確認）\n【要確認】全施策の allocation が画像に記載なし（すべて0は仮値）\n【要確認】defaults（follower_unit_price, avg_followers, imp_rate, cpm, fq）は画像に記載なし"
+  },
+  "defaults": {},
+  "tactics": [
+    {
+      "category": "タイアップ",
+      "detail": "グルメ系有力アカウント タイアップ投稿",
+      "ad_type": "要確認",
+      "target": "辛いものイノベーター",
+      "sns": "IG",
+      "allocation": 0,
+      "timing": "Phase1: 発売期",
+      "memo": "【要確認】起用人数は画像で判読困難"
+    },
+    {
+      "category": "新商品PR",
+      "detail": "新商品発売解禁情報",
+      "ad_type": "要確認",
+      "target": "辛いもの種類好き",
+      "sns": "IG",
+      "allocation": 0,
+      "timing": "Phase2: 発売後1-2週間",
+      "num_influencers": 3
+    },
+    {
+      "category": "レビュー",
+      "detail": "新商品レビュー",
+      "ad_type": "要確認",
+      "target": "辛いもの種類好き",
+      "sns": "IG",
+      "allocation": 0,
+      "timing": "Phase2: 発売後1-2週間",
+      "memo": "【要確認】起用人数は画像で判読困難"
+    },
+    {
+      "category": "シーン訴求",
+      "detail": "ドラマ見ながら",
+      "ad_type": "要確認",
+      "target": "SNSトレンド好き",
+      "sns": "IG",
+      "allocation": 0,
+      "timing": "Phase3: 発売後2-3週間",
+      "num_influencers": 3
+    },
+    {
+      "category": "シーン訴求",
+      "detail": "第1弾 シーン訴求（仕事終わり・料理前の空腹 等 複数シーン）",
+      "ad_type": "要確認",
+      "target": "辛いものイノベーター",
+      "sns": "TikTok",
+      "allocation": 0,
+      "timing": "Phase1: 発売期",
+      "memo": "【確認済】各シーン2名との記載あり\n【要確認】シーン数が不明のため合計人数は要確認。シーン詳細は画像の小文字で一部判読困難"
+    },
+    {
+      "category": "チャレンジ",
+      "detail": "10種類チャレンジ",
+      "ad_type": "要確認",
+      "target": "辛いものイノベーター",
+      "sns": "TikTok",
+      "allocation": 0,
+      "timing": "Phase1: 発売期",
+      "num_influencers": 3
+    },
+    {
+      "category": "モッパン",
+      "detail": "モッパン",
+      "ad_type": "要確認",
+      "target": "辛いもの種類好き",
+      "sns": "TikTok",
+      "allocation": 0,
+      "timing": "Phase2: 発売後1-2週間",
+      "num_influencers": 5
+    },
+    {
+      "category": "シーン訴求",
+      "detail": "第2弾 シーン訴求（パートナーとビデオ通話・クラス発表/入学式 等）",
+      "ad_type": "要確認",
+      "target": "辛いもの種類好き",
+      "sns": "TikTok",
+      "allocation": 0,
+      "timing": "Phase2: 発売後1-2週間",
+      "memo": "【要確認】起用人数は画像で判読困難"
+    },
+    {
+      "category": "アレンジ",
+      "detail": "アレンジ",
+      "ad_type": "要確認",
+      "target": "辛いもの種類好き",
+      "sns": "TikTok",
+      "allocation": 0,
+      "timing": "Phase2: 発売後1-2週間",
+      "num_influencers": 3
+    },
+    {
+      "category": "HOOK",
+      "detail": "バズ投稿HOOK",
+      "ad_type": "要確認",
+      "target": "SNSトレンド好き",
+      "sns": "TikTok",
+      "allocation": 0,
+      "timing": "Phase3: 発売後2-3週間",
+      "num_influencers": 3,
+      "memo": "【要確認】「×の」の前の文字が画像で判読困難"
+    },
+    {
+      "category": "HOOK",
+      "detail": "SNSでお題HOOK",
+      "ad_type": "要確認",
+      "target": "SNSトレンド好き",
+      "sns": "TikTok",
+      "allocation": 0,
+      "timing": "Phase3: 発売後2-3週間",
+      "num_influencers": 3
+    },
+    {
+      "category": "ギフティング",
+      "detail": "大型KOLへの SPECIAL BOX ギフティング",
+      "ad_type": "要確認",
+      "target": "辛いものイノベーター",
+      "sns": "要確認",
+      "allocation": 0,
+      "timing": "Phase1: 発売期",
+      "num_influencers": 30,
+      "memo": "【要確認】画像の行ラベルが判読困難（媒体名不確実）。「うちベスト○名」との記載あり（数字判読困難）"
+    },
+    {
+      "category": "ギフティング",
+      "detail": "グルメ系有力ギフティング",
+      "ad_type": "要確認",
+      "target": "辛いものイノベーター",
+      "sns": "要確認",
+      "allocation": 0,
+      "timing": "定常: Phase1",
+      "memo": "定常施策。【要確認】起用人数・媒体は画像に記載なし"
+    },
+    {
+      "category": "ギフティング",
+      "detail": "グルメ系KOLへのギフティング",
+      "ad_type": "要確認",
+      "target": "辛いもの種類好き",
+      "sns": "要確認",
+      "allocation": 0,
+      "timing": "定常: Phase2",
+      "memo": "定常施策。【要確認】起用人数・媒体は画像に記載なし"
+    },
+    {
+      "category": "ギフティング",
+      "detail": "各シーンに対応するトライブのKOLへのギフティング",
+      "ad_type": "要確認",
+      "target": "SNSトレンド好き",
+      "sns": "要確認",
+      "allocation": 0,
+      "timing": "定常: Phase3",
+      "memo": "定常施策。【要確認】起用人数・媒体は画像に記載なし"
+    }
+  ]
+}
